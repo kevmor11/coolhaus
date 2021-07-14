@@ -1,10 +1,46 @@
 <footer class="site-footer" data-section-type="footer" data-section-id="{{ section.id }}">
-	<div class="container">
+	<video class="video" autoplay playsinline muted loop>
+		<source src="https://player.vimeo.com/external/543762567.hd.mp4?s=0698f06d2565f70b21fe6f4dc007590305e1cd4e&profile_id=175&download=1" type="video/mp4">
+	</video>
+	<img class="footer-mask hide-mobile" src="{{ 'footer-mask.png' | asset_img_url: '2000x' }}">
+	<img class="footer-bg hide-desktop" src="{{ 'footer-bg-xs.jpg' | asset_img_url: '800x' }}">
 
+	<div class="container">
 		{% comment %} Footer top - logo, menus, text, newsletter {% endcomment %}
 		<div class="footer-inner">
+			<img class="footer-logo" src="{{ 'logo-footer.svg' | asset_url }}">
+
 			{%- if section.blocks.size > 0 -%}
 				<div class="footer__blocks footer__blocks--{{ section.blocks.size }}">
+					<div class="footer__block footer__block--newsletter">
+						<label for="newsletter">LET'S STAY IN TOUCH</label>
+
+						{%- form 'customer', id: form_id -%}
+							<div class="js-signUp-form signUp-form">
+								<input type="hidden" id="contact_tags" name="contact[tags]" value="newsletter"/>
+								<div class="inputGroup mc-field-group">
+									<label for="mce-EMAIL" class="accessible-label">{{ 'general.slide_out_navigation.search_label' | t }}</label>
+									<input class="signUp-input required email" type="email" value="" name="contact[email]" id="mce-EMAIL" placeholder="Enter email here" required>
+									<input type="hidden" id="newsletter-first-name" name="contact[first_name]" value="Newsletter" />
+									<input type="hidden" id="newsletter-last-name" name="contact[last_name]" value="Subscriber" />
+									<button type="submit" class="signUp-submit" name="subscribe" id="mc-embedded-subscribe" aria-label="{{ 'general.accessibility.submit' | t }}">JOIN</button>
+								</div>
+							</div>
+							{%- if form.posted_successfully? -%}
+								<div class="signUp-confirmation p">{{ 'general.newsletter_signup.success_message' | t }}</div>
+							{%- elsif form.errors -%}
+								{{ form.errors | default_errors }}
+							{%- endif -%}
+						{%- endform -%}
+
+						{%- if show_social_icons -%}
+							<div class="hide-mobile">
+								<label for="social">FOLLOW US</label>
+								{% render 'social-links', class:  %}
+							</div>
+						{%- endif -%}
+					</div>
+
 
 					{%- for block in section.blocks -%}
 						{%- assign mobile_hide_block = block.settings.mobile_hide_block -%}
@@ -43,7 +79,7 @@
 							{%- when 'menu' -%}
 								{%- assign menu = block.settings.menu -%}
 								{%- assign title = block.settings.title -%}
-								<div class="footer__block footer__block--menus {% if mobile_hide_block %}med_hide{% endif %}" {{ block.shopify_attributes }}>
+								<div class="footer__block footer__block--menus {{ title | downcase | replace: ' ','_' }} {% if mobile_hide_block %}med_hide{% endif %}" {{ block.shopify_attributes }}>
 									{%- if menu != blank or title != blank -%}
 									<div class="footer__block-menu" >
 										{%- if title != blank -%}
@@ -100,15 +136,22 @@
 				</div>
 			{%- endif -%}
 
+			{%- assign show_social_icons = section.settings.show_social_icons -%}
+			{%- if show_social_icons -%}
+				<div class="hide-desktop">
+					{%- render 'social-links' -%}
+				</div>
+			{%- endif -%}
+
+			<div class="footer__text hide-desktop">&copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: '/' }} | <a href="/pages/privacy-policy">Privacy Policy</a></div>
 		</div>
 	</div>
 
 	{% comment %} Bottom bar - Payment icons, text, copyright, social icons, menu {% endcomment %}
 	{%- assign footer_text = section.settings.text -%}
 	{%- assign menu = section.settings.menu -%}
-	{%- assign show_social_icons = section.settings.show_social_icons -%}
 
-	<div class="footer-bottom">
+	<div class="footer-bottom hide-mobile">
 		<div class="container">
 			<div class="row">
 
@@ -117,9 +160,7 @@
 
 					{%- if show_social_icons or menu -%}
 
-						{%- if show_social_icons -%}
-							{%- render 'social-links' -%}
-						{%- endif -%}
+						<a href="/search">Search</a>
 
 						{%- if menu -%}
 							{%- if linklists[menu].links != empty -%}
@@ -144,11 +185,11 @@
 						</div>
 					{%- endif -%}
 
-					<div class="footer__text">&copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: '/' }}</div>
+					<div class="footer__text hide-mobile">&copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: '/' }} | <a href="/pages/privacy-policy">Privacy Policy</a></div>
 
-					<div class="footer__copyright">
+					{% comment %} <div class="footer__copyright">
 						<p>{{ 'password.content.powered_by' | t }}<a href="https://www.shopify.com/" rel="noopener" target="_blank" rel="nofollow">Shopify</a></p>
-					</div>
+					</div> {% endcomment %}
 				</div>
 
 			</div>

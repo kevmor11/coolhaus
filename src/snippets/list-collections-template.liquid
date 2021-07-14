@@ -14,7 +14,7 @@
 <section class="collectionList container-wrap" id="collection-module-{{ section.id }}" data-section-type="collection-grid" data-section-id="{{ section.id }}">
 	<div class="collectionList-header row row-sm">
 		<div class="block s1">
-			<h1>{{ 'collections.listing_page.title' | t }}</h1>
+			<h1>FLAVORS</h1>
 		</div>
 	</div>
 
@@ -22,8 +22,10 @@
 		{%- comment -%} Collection Block, contains .js-quickView {%- endcomment -%}
 
 		{%- for collection in collections -%}
-			{%- assign image = collection.image -%}
-			{%- render 'collectionList-block', collection: collection, image: image -%}
+			{% if collection.title == 'Mint' or collection.title == 'Chocolate' or collection.title == 'Cookie Dough' or collection.title == 'Peanut Butter' or collection.title == 'Cupcake' or collection.title == 'Vanilla' %}
+				{%- assign image = collection.image -%}
+				{%- render 'collectionList-block', collection: collection, image: image -%}
+			{% endif %}
 		{%- endfor -%}
 
 		{%- comment -%} Spacers for inline-block based collectionList {%- endcomment -%}

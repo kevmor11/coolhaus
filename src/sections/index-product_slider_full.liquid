@@ -1,0 +1,34 @@
+<section class="product-slider flickity-section">
+  {% assign collection1 = collections[section.settings.collection] %}
+  <div>
+    <h2 class="title">{{ collection1.title }}</h2>
+    <a class="cta" href="{{ collection1.url }}">SHOP ALL</a>
+  </div>
+
+  <div class="product-slider" data-flickity='{ "cellAlign": "center", "contain": true, "imagesLoaded": true, "wrapAround": true }'>
+    {% for product in collection1.products %}
+      <div class="carousel-cell">
+        {% include 'product-card', product %}
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Collection Slider",
+    "settings": [
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection Slider",
+        "category": "Custom"
+      }
+    ]
+  }
+{% endschema %}

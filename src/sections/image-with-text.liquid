@@ -122,34 +122,61 @@
 
 			{%- if title != blank or subheading != blank or text != blank or button_text != blank -%}
 			<div class="gallery-content block s1 {{ contentWidth }}">
-				<div class="gallery-content-inner">
-					{%- if subheading != blank -%}
-						<p class="subheading-text{% if transition_text %} will-animate{% endif %}"{% if transition_text %} data-animation="moPopUp" data-animation-delay="{{ animation_delay }}"{% endif %}>
-							{{- subheading -}}
-						</p>
-						{%- assign animation_delay = animation_delay | plus: 250 -%}
-					{%- endif -%}
+				<div class="{% if section.settings.img-1 %}gallery-wrapper-custom{% else %}gallery-wrapper-middle{% endif %}">
+					<div class="gallery-content-inner">
+						{%- if subheading != blank -%}
+							<p class="subheading-text{% if transition_text %} will-animate{% endif %}"{% if transition_text %} data-animation="moPopUp" data-animation-delay="{{ animation_delay }}"{% endif %}>
+								{{- subheading -}}
+							</p>
+							{%- assign animation_delay = animation_delay | plus: 250 -%}
+						{%- endif -%}
 
-					{%- if title != blank -%}
-						<h2{% if transition_text %} class="will-animate" data-animation="moPopUp" data-animation-delay="{{ animation_delay }}"{% endif %}>
-							{{- title -}}
-						</h2>
-						{%- assign animation_delay = animation_delay | plus: 250 -%}
-					{%- endif -%}
+						{%- if title != blank -%}
+							<h2{% if transition_text %} class="will-animate" data-animation="moPopUp" data-animation-delay="{{ animation_delay }}"{% endif %}>
+								{{- title -}}
+							</h2>
+							{%- assign animation_delay = animation_delay | plus: 250 -%}
+						{%- endif -%}
 
-					{%- if text != blank -%}
-						<div class="gallery-content__text{% if transition_text %} will-animate{% endif %}"{% if transition_text %} data-animation="moPopUp" data-animation-delay="{{ animation_delay }}"{% endif %}>
-							{{- text -}}
+						{%- if text != blank -%}
+							<div class="gallery-content__text{% if transition_text %} will-animate{% endif %}"{% if transition_text %} data-animation="moPopUp" data-animation-delay="{{ animation_delay }}"{% endif %}>
+								{{- text -}}
+							</div>
+							{%- assign animation_delay = animation_delay | plus: 250 -%}
+						{%- endif -%}
+
+						{%- if button_text != blank -%}
+							<div class="gallery-content__button{% if transition_text %} will-animate{% endif %}"{% if transition_text %} data-animation="moPopUp" data-animation-delay="{{ animation_delay }}"{% endif %}>
+								<a {% if button_link != blank %}href="{{ button_link }}"{% endif %} class="button button--{{ button_style }}">{{ button_text }}</a>
+							</div>
+						{%- endif -%}
+					</div>
+					{% if section.settings.img-1 %}
+						<div class="collectionGrid-row images hide-mobile">
+							<div class="block lg_s13">
+								<img class="w-100" src="{{ section.settings.img-1 | img_url: '400x' }}">
+							</div>
+							<div class="block lg_s13">
+								<img class="w-100" src="{{ section.settings.img-2 | img_url: '400x' }}">
+							</div>
+							<div class="block lg_s13">
+								<img class="w-100" src="{{ section.settings.img-3 | img_url: '400x' }}">
+							</div>
 						</div>
-						{%- assign animation_delay = animation_delay | plus: 250 -%}
-					{%- endif -%}
-
-					{%- if button_text != blank -%}
-						<div class="gallery-content__button{% if transition_text %} will-animate{% endif %}"{% if transition_text %} data-animation="moPopUp" data-animation-delay="{{ animation_delay }}"{% endif %}>
-							<a {% if button_link != blank %}href="{{ button_link }}"{% endif %} class="button button--{{ button_style }}">{{ button_text }}</a>
+						<div class="carousel-images carousel hide-desktop" data-flickity='{ "cellAlign": "left", "contain": true, "pageDots": false, "imagesLoaded": true }'>
+							<div class="carousel-cell">
+								<img class="w-100" src="{{ section.settings.img-1-xs | img_url: '400x' }}">
+							</div>
+							<div class="carousel-cell">
+								<img class="w-100" src="{{ section.settings.img-2-xs | img_url: '400x' }}">
+							</div>
+							<div class="carousel-cell">
+								<img class="w-100" src="{{ section.settings.img-3-xs | img_url: '400x' }}">
+							</div>
 						</div>
-					{%- endif -%}
+					{% endif %}
 				</div>
+
 			</div>
 			{%- endif -%}
 
@@ -339,6 +366,41 @@
 				{ "label": "Primary", "value": "primary" },
 				{ "label": "Secondary", "value": "secondary" }
 			]
+		},
+		{
+			"type": "header",
+			"content": "3 Images"
+		},
+		{
+			"type": "image_picker",
+			"id": "img-1",
+			"label": "Image 1 - Desktop",
+			"info": "Leave this one blank to hide images"
+		},
+		{
+			"type": "image_picker",
+			"id": "img-1-xs",
+			"label": "Image 1 - Mobile"
+		},
+		{
+			"type": "image_picker",
+			"id": "img-2",
+			"label": "Image 2 - Desktop"
+		},
+		{
+			"type": "image_picker",
+			"id": "img-2-xs",
+			"label": "Image 2 - Mobile"
+		},
+		{
+			"type": "image_picker",
+			"id": "img-3",
+			"label": "Image 3 - Desktop"
+		},
+		{
+			"type": "image_picker",
+			"id": "img-3-xs",
+			"label": "Image 3 - Mobile"
 		}
 	],
 	"blocks": [

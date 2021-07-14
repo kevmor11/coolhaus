@@ -9,11 +9,11 @@
 -%}
 <div class="footer__social">
     <ul class="social-links social-links--footer">
-        {%- if settings.twitter_url != '' -%}
+        {%- if settings.instagram_url != '' -%}
             <li>
-                <a href="{{settings.twitter_url}}" target="_blank" class="social-link" rel="noopener">
-                    {%- render 'icon-twitter' -%}
-                    <span class="fallback-text">{{ 'general.footer.twitter' | t }}</span>
+                <a href="{{settings.instagram_url}}" target="_blank" class="social-link" rel="noopener">
+                    <img class="social-logo" src="{{ 'instagram-logo.svg' | asset_url }}">
+                    <span class="fallback-text">{{ 'general.footer.instagram' | t }}</span>
                 </a>
             </li>
         {%- endif -%}
@@ -25,11 +25,19 @@
                 </a>
             </li>
         {%- endif -%}
-        {%- if settings.instagram_url != '' -%}
+        {%- if settings.youtube_url != '' -%}
             <li>
-                <a href="{{settings.instagram_url}}" target="_blank" class="social-link" rel="noopener">
-                    {%- render 'icon-instagram' -%}
-                    <span class="fallback-text">{{ 'general.footer.instagram' | t }}</span>
+                <a href="{{settings.youtube_url}}" target="_blank" class="social-link" rel="noopener">
+                    {%- render 'icon-youtube' -%}
+                    <span class="fallback-text">{{ 'general.footer.youtube' | t }}</span>
+                </a>
+            </li>
+        {%- endif -%}
+        {%- if settings.twitter_url != '' -%}
+            <li>
+                <a href="{{settings.twitter_url}}" target="_blank" class="social-link" rel="noopener">
+                    {%- render 'icon-twitter' -%}
+                    <span class="fallback-text">{{ 'general.footer.twitter' | t }}</span>
                 </a>
             </li>
         {%- endif -%}
@@ -38,14 +46,6 @@
                 <a href="{{settings.pinterest_url}}" target="_blank" class="social-link" rel="noopener">
                     {%- render 'icon-pinterest' -%}
                     <span class="fallback-text">{{ 'general.footer.pinterest' | t }}</span>
-                </a>
-            </li>
-        {%- endif -%}
-        {%- if settings.youtube_url != '' -%}
-            <li>
-                <a href="{{settings.youtube_url}}" target="_blank" class="social-link" rel="noopener">
-                    {%- render 'icon-youtube' -%}
-                    <span class="fallback-text">{{ 'general.footer.youtube' | t }}</span>
                 </a>
             </li>
         {%- endif -%}

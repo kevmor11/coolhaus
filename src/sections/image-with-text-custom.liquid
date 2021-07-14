@@ -1,0 +1,45 @@
+<section class="image-text-custom hide-desktop">
+	<img class="w-100" src="{{ section.settings.image | img_url: '750x' }}">
+  <div class="text-container">
+    <h1 class="slide-content__heading">{{ section.settings.title }}</h1>
+    <a class="button button--primary" href="{{ section.settings.button-url }}">{{ section.settings.button-text }}</a>
+  </div>
+</section>
+
+{% comment %} Schema {% endcomment %}
+{% schema %}
+{
+	"name": "Image with text Mobile",
+	"settings": [
+		{
+			"type": "image_picker",
+			"id": "image",
+			"label": "Image",
+      "info": "This module is mobile only, for the Mobile Hero"
+		},
+    {
+			"type": "text",
+			"id": "title",
+			"label": "Title",
+			"default": "Unique and thoughtfully crafted"
+		},
+    {
+			"type": "text",
+			"id": "button-text",
+			"label": "Button Text",
+			"default": "Explore Our Flavors"
+		},
+    {
+			"type": "url",
+			"id": "button-url",
+			"label": "Button URL"
+		}
+	],
+	"presets": [
+    {
+      "name": "Image Text Custom",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

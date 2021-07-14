@@ -1,0 +1,33 @@
+
+{% if product.metafields.custom_fields["origin_story"] != blank %}
+  <section class="product-origin">
+    <div class="wrapper">
+      <div class="column">
+        {% comment %} {% if product.handle contains 'churro' %}
+          <img class="product-icon" src="{{ 'churro.png' | asset_img_url: '300x' }}">
+        {% endif %} {% endcomment %}
+        <div class="text-wrapper">
+          <h3 class="title">{{ section.settings.title }}</h3>
+          <div class="desc">{{ product.metafields.custom_fields["origin_story"] }}</div>
+        </div>
+      </div>
+      <div class="column">
+        <img class="truck" src="{{ 'truck.png' | asset_img_url: '500x' }}">
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Origin Story",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "THE ORIGIN STORY"
+      }
+    ]
+  }
+{% endschema %}

@@ -235,21 +235,23 @@
 	<div class="productForm-block">
 		<div class="qty__adjust">
 			<input type="number" class="qty__adjust-input" name="quantity" id="quantity--{{ section.id }}" value="1" min="1">
-			<button type="button" class="qty__adjust-btn js-qty__adjust-btn decrease" aria-label="{{ 'general.accessibility.decrease' | t }}">{% render 'icon-minus' %}</button>
-			<button type="button" class="qty__adjust-btn js-qty__adjust-btn increase" aria-label="{{ 'general.accessibility.increase' | t }}">{% render 'icon-plus' %}</button>
+			<button type="button" class="qty__adjust-btn js-qty__adjust-btn decrease" aria-label="{{ 'general.accessibility.decrease' | t }}">-</button>
+			<button type="button" class="qty__adjust-btn js-qty__adjust-btn increase" aria-label="{{ 'general.accessibility.increase' | t }}">+</button>
 		</div>
 
-		<div class="productForm-buttons{% if settings.color_button_primary_bg == settings.color_background_new %} productForm-buttons--alt{% endif %}">
-			<button class="productForm-submit{% if section.settings.enable_payment_button and settings.enable_accept_terms == false %} button--alt{% endif %}" data-ajax="{{ settings.enable_ajax_cart }}" type="submit" data-handle="{{product.handle}}" {% if sold_out %}disabled{% endif %} data-add-to-cart>
-				<span data-add-to-cart-text>
-					{%- unless sold_out -%}
-						{{- 'products.form.submit' | t -}}
-					{% else %}
-						{{- 'products.form.sold_out' | t -}}
-					{%- endunless -%}
-				</span>
-			</button>
-		</div>
+		<button class="productForm-submit{% if section.settings.enable_payment_button and settings.enable_accept_terms == false %} button{% endif %}" data-ajax="{{ settings.enable_ajax_cart }}" type="submit" data-handle="{{product.handle}}" {% if sold_out %}disabled{% endif %} data-add-to-cart>
+			<span data-add-to-cart-text>
+				{%- unless sold_out -%}
+					{{- 'products.form.submit' | t -}}
+				{% else %}
+					{{- 'products.form.sold_out' | t -}}
+				{%- endunless -%}
+			</span>
+		</button>
+
+		{% unless product.handle == 'truck-booking' %}
+			<a class="btn productForm-submit buy-local" href="/pages/find-local-retailers">Buy It Locally</a>
+		{% endunless %}
 
 		{%- unless settings.enable_accept_terms -%}
 			{%- comment -%} Show payment button if section level setting is true or the global setting for Quick view is true {%- endcomment -%}

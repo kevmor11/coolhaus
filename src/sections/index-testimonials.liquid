@@ -1,0 +1,89 @@
+<section class="index-testimonials flickity-section">
+  <img class="bloop" src="{{ 'bloop.png' | asset_img_url: '500x' }}">
+
+  <div class="testimonial-wrapper">
+    <h2 class="title">{{ section.settings.title }}</h2>
+    <div class="testimonial-carousel">
+      {% for block in section.blocks %}
+        {% assign product = all_products[block.settings.product] %}
+        <div class="carousel-cell">
+          <div class="review">{{ block.settings.review }}</div>
+          {% if block.settings.image %}
+            <img src="{{ block.settings.image | img_url: '200x' }}">
+          {% endif %}
+          <span class="author">{{ block.settings.author }}</span>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="button-custom button--prev-t">
+      <img src="{{ 'arrow-left.svg' | asset_url }}">
+    </div>
+    <div class="button-custom button--next-t">
+      <img src="{{ 'arrow-right.svg' | asset_url }}">
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(() => {
+      var $carouselTestimonials = $('.testimonial-carousel').flickity({
+        cellAlign: 'left',
+        contain: true,
+        pageDots: false,
+        imagesLoaded: true,
+        wrapAround: true,
+        prevNextButtons: false
+      });
+
+      $('.button--prev-t').click(() => {
+        $carouselTestimonials.flickity('previous');
+      });
+
+      $('.button--next-t').click(() => {
+        $carouselTestimonials.flickity('next');
+      });
+    });
+  </script>
+</section>
+
+{% schema %}
+  {
+    "name": "Testimonials",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Section Title",
+        "default": "SPREAD THE LOVE"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "review",
+        "name": "Review",
+        "settings": [
+          {
+            "type": "textarea",
+            "id": "review",
+            "label": "Review"
+          },
+          {
+            "type": "text",
+            "id": "author",
+            "label": "Author"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Testimonials",
+        "category": "Custom"
+      }
+    ]
+  }
+{% endschema %}

@@ -21,12 +21,12 @@
 	{%- assign collection_block_size = 'lg_s1' | append: columns_size | append: ' med_s13' -%}
 {%- endif -%}
 
-<section class="related-products container-wrap collectionGrid js-collectionGrid {% unless enableSection %}visually-hidden{% endunless%}"
+<section class="product-slider flickity-section"
 	data-columns="{{ products_columns }}"
 	data-section-type="related-products"
 	data-section-id="{{ section.id }}"
 	data-product-id="{{ product.id }}"
-	data-limit="{{ settings.products_columns }}"
+	data-limit="5"
 	data-show_quantity="{{ settings.show_quantity }}"
 	data-show_reviews="{{ show_reviews }}"
 	data-yotpo="{{ settings.enable_yotpo }}"
@@ -39,26 +39,44 @@
 		{%- if recommendations.performed -%}
 			{%- if recommendations.products_count > 0 -%}
 
-				{%- assign alignCenter = false -%}
-				{%- if recommendations.products_count < products_columns -%}
-					{%- assign alignCenter = true -%}
-				{%- endif -%}
-
 				{%- if heading != blank -%}
-					<div class="page-title">
-						<div class="container">
-							<div class="row row-sm">
-								<h2>{{ heading }}</h2>
-							</div>
-						</div>
+					<div>
+						<h2 class="title">{{ heading }}</h2>
 					</div>
 				{%- endif -%}
 
-				<div class="collectionGrid-row {% if alignCenter %}row--center{% endif %}">
-					{%- for product in recommendations.products -%}
-						{%- render 'product-grid-item', product: product, collection_block_size: collection_block_size, collection_block_size_mobile: collection_block_size_mobile, index: forloop.index -%}
-					{%- endfor -%}
+				<div class="product-slider related-slider">
+					{% for product in recommendations.products %}
+						<div class="carousel-cell">
+							{% include 'product-card', product %}
+						</div>
+					{% endfor %}
 				</div>
+
+				<script>
+					$(document).ready(() => {
+						$productCarousel1 = $('.related-slider').flickity({
+							cellAlign: 'center',
+							contain: true,
+							imagesLoaded: true,
+							wrapAround: true
+						});
+
+						$('.product-hover-js').mouseenter(function() {
+							if($(window).width() > 767) {
+								$(this).find('video.bg-video, form.productForm').show();
+								$(this).find('img.spinner').addClass('rotating');
+							}
+						})
+
+						$('.product-hover-js').mouseleave(function() {
+							if($(window).width() > 767) {
+								$(this).find('video.bg-video, form.productForm').hide();
+								$(this).find('img.spinner').removeClass('rotating');
+							}
+						})
+					})
+				</script>
 			{%- endif -%}
 		{%- else -%}
 			<div class="related__placeholder"></div>

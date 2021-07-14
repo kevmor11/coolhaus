@@ -1,0 +1,39 @@
+{% if product.metafields.custom_fields["in_situation_video_-_desktop"] != blank %}
+  <section class="carousel-full">
+    <video class="bg-video" autoplay playsinline muted loop>
+      {% if product.metafields.custom_fields["flavour_video"] %}
+        {% assign video = product.metafields.custom_fields["flavour_video"] %}
+      {% else %}
+        {% assign video = 'https://player.vimeo.com/external/553441087.hd.mp4?s=fcbffe60ee362fc2fece4d0e325f38be7565777f&profile_id=175' %}
+      {% endif %}
+      <source src="{{ video }}" type="video/mp4">
+    </video>
+    <div class="video-container">
+      <video class="video hide-mobile" autoplay playsinline muted loop>
+        <source src="{{ product.metafields.custom_fields["in_situation_video_-_desktop"] }}" type="video/mp4">
+      </video>
+      <video class="video hide-desktop" autoplay playsinline muted loop>
+        <source src="{{ product.metafields.custom_fields["in_situation_video_-_mobile"] }}" type="video/mp4">
+      </video>
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Product Video Full",
+    "settings": [
+      {
+        "type": "text",
+        "id": "video",
+        "label": "In Situation Video - Desktop",
+        "info": "Section hidden if left blank"
+      },
+      {
+        "type": "text",
+        "id": "video-xs",
+        "label": "In Situation Video - Mobile"
+      }
+    ]
+  }
+{% endschema %}

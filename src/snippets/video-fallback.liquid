@@ -1,0 +1,22 @@
+<script>
+  $(document).ready(() => {
+    $('video[data-fallback-image]').each(function(i, value) {
+      var video = $(this).get(0).play();
+
+      if(video !== undefined && $(window).width() < 992) {
+        video.then().catch(error => {
+          var image = $(this).data('fallback-image'),
+              element = '';
+
+          if($(this).is('#carousel-product-video')) {
+            element = `<img id="carousel-product-fallback" class="fallback" src="${image}">`;
+          } else {
+            element = `<img class="fallback" src="${image}">`;
+          }
+
+          if(!image.includes('no-image')) $(this).hide().after(element);
+        });
+      }
+    })
+  })
+</script>

@@ -44,9 +44,9 @@
 {%- endif -%}
 
 {%- assign banner_image = collection.image -%}
-{%- if collection.handle == 'all' %}
-	{%- assign banner_image = section.settings.banner_image -%}
-{%- endif %}
+{%- assign banner_image = section.settings.banner_image -%}
+{%- assign banner_video = section.settings.banner_video -%}
+{%- assign fallback_image = section.settings.fallback_image | img_url: '1000x' -%}
 
 {%- comment -%} Assign all selected tags to container data-tags attribute {%- endcomment -%}
 {%- if enable_filters -%}
@@ -85,7 +85,7 @@
 		<div class="page-title">
 			<div class="container" data-collection-banner-content>
 				{%- if show_title -%}
-					<div class="row row-sm page-title__wrapper">
+					<div class="row page-title__wrapper">
 						<h1 class="page-title__heading">
 							{{- collection.title -}}
 							{%- for tag in collection.all_tags -%}
@@ -106,7 +106,7 @@
 	{%- endcapture -%}
 
 	{%- if show_banner and banner_image -%}
-		{%- render 'banner--page', page_title: page_title, banner_image: banner_image -%}
+		{%- render 'banner--page', page_title: page_title, banner_image: banner_image, banner_video: banner_video, fallback_image: fallback_image -%}
 	{%- else -%}
 		{{- page_title -}}
 	{%- endif -%}
@@ -378,7 +378,11 @@
 						{%- if collection.products_count > 0 -%}
 
 							{%- for product in collection.products -%}
-								{%- render 'product-grid-item', product: product, collection_block_size: collection_block_size, collection_block_size_mobile: collection_block_size_mobile, index: forloop.index, last_element_class: last_element_class -%}
+								{% comment %} {%- render 'product-grid-item', product: product, collection_block_size: collection_block_size, collection_block_size_mobile: collection_block_size_mobile, index: forloop.index, last_element_class: last_element_class -%} {% endcomment %}
+
+								<div class="collectionBlock js-collectionBlock block lg_s14 med_s13 s1 is-visible">
+									{% include 'product-card', product %}
+								</div>
 							{%- endfor -%}
 
 						{%- else -%}
@@ -478,6 +482,17 @@
 			"id": "banner_image",
 			"label": "Default image",
 			"info": "Will be shown on collections/all"
+		},
+		{
+			"type": "text",
+			"id": "banner_video",
+			"label": "Banner Video",
+			"info": "Priority over image"
+		},
+		{
+			"type": "image_picker",
+			"id": "fallback_image",
+			"label": "Banner Video Mobile Fallback Image"
 		},
 		{
 			"type": "select",

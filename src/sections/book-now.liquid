@@ -1,0 +1,61 @@
+{% comment %} <section class="catering">
+	<div class="catering__wrapper">
+		<div class="collectionGrid-row">
+			<div class="block lg_s1">
+				<div class="event-contact-form" style="background: url({{ 'form-bg.jpg' | asset_img_url: '700x' }}) center center no-repeat">
+					<div style="margin:0 auto;" class="pxFormGenerator" id="yQZ8E-L3xRsqxqpPUdX_8w"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section> {% endcomment %}
+
+<section class="page-hero">
+  <img class="w-100 hide-mobile" src="{{ section.settings.hero-img | img_url: '2000x' }}">
+  <img class="w-100 hide-desktop" src="{{ section.settings.hero-img-xs | img_url: '800x' }}">
+
+  <div class="blocker"></div>
+
+  <div class="text-container flex-container">
+    <div>
+      <h1 class="title">{{ section.settings.title }}</h1>
+      {% comment %} <div class="desc">{{ section.settings.desc }}</div> {% endcomment %}
+    </div>
+  </div>
+</section>
+
+<section class="image-with-text">
+  <div class="wrapper">
+    <div class="column w-100" style="vertical-align: top;">
+      <div style="margin:0 auto;" class="pxFormGenerator" id="yQZ8E-L3xRsqxqpPUdX_8w"></div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+	{
+		"name": "Book Now",
+		"settings": [
+			{
+				"type": "text",
+				"id": "title",
+				"label": "Title"
+			},
+			{
+				"type": "richtext",
+				"id": "desc",
+				"label": "Body Content"
+			},
+      {
+				"type": "image_picker",
+				"id": "hero-img",
+				"label": "Hero Image - Desktop"
+			},
+      {
+				"type": "image_picker",
+				"id": "hero-img-xs",
+				"label": "Hero Image - Mobile"
+			}
+		]
+	}
+{% endschema %}

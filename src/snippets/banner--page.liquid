@@ -14,26 +14,38 @@
 <section class="banner banner--transparent-header" data-header-style="index">
     <div class="banner-inner banner-padded banner-padded--{{ banner_height }} banner--text-{{ banner_text_position }}">
         {%- unless section.settings.banner_height == 'original-height' -%}
-            <div class="banner-img lazyload" data-bgset="{% render 'bgset', image: banner_image %}" data-sizes="auto" data-parent-fit="cover"></div>
-            <noscript>
-                <div class="banner-img" style="background-image:url('{{ banner_image | img_url: '1024x' }}');"></div>
-            </noscript>
+            {% if banner_video %}
+                <video class="video w-100" autoplay playsinline muted loop data-fallback-image="{{ fallback_image }}">
+                    <source src="{{ banner_video }}" type="video/mp4">
+                </video>
+            {% else %}
+                <div class="banner-img lazyload" data-bgset="{% render 'bgset', image: banner_image %}" data-sizes="auto" data-parent-fit="cover"></div>
+                <noscript>
+                    <div class="banner-img" style="background-image:url('{{ banner_image | img_url: '1024x' }}');"></div>
+                </noscript>
+            {% endif %}
         {%- else -%}
             {%- assign image = banner_image -%}
             {%- assign image_widths = '[295,394,590,700,800,1000,1200,1500,1800,2000,2400]' -%}
             {%- assign image_url_pattern = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
 
             <div class="banner-img__container" style="padding-top: {{ 100 | divided_by: image.aspect_ratio | append: '%' }}" data-collection-banner-image>
-                <img class="banner-img--original lazyload"
-                        src="{{ 'blank.gif' | asset_img_url: '1x1' }}"
-                        data-src="{{ image_url_pattern }}"
-                        data-widths="{{ image_widths }}"
-                        data-aspectratio="{{ image.aspect_ratio }}"
-                        data-sizes="auto"
-                        alt="{{ collection.title }}">
-                <noscript>
-                    <img src="{{ image | img_url: '2048x' }}" alt="{{ image.alt | escape }}" class="banner-img--original no-js-image">
-                </noscript>
+                {% if banner_video %}
+                    <video class="video w-100" autoplay playsinline muted loop data-fallback-image="{{ fallback_image }}">
+                        <source src="{{ banner_video }}" type="video/mp4">
+                    </video>
+                {% else %}
+                    <img class="banner-img--original lazyload"
+                            src="{{ 'blank.gif' | asset_img_url: '1x1' }}"
+                            data-src="{{ image_url_pattern }}"
+                            data-widths="{{ image_widths }}"
+                            data-aspectratio="{{ image.aspect_ratio }}"
+                            data-sizes="auto"
+                            alt="{{ collection.title }}">
+                    <noscript>
+                        <img src="{{ image | img_url: '2048x' }}" alt="{{ image.alt | escape }}" class="banner-img--original no-js-image">
+                    </noscript>
+                {% endif %}
             </div>
         {%- endunless -%}
 

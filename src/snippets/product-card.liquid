@@ -1,0 +1,29 @@
+<div class="image-wrapper product-hover-js">
+  <div class="flex-container">
+    <div>
+      <a href="{{ product.url }}">
+        <img class="initial" src="{{ product.images[0].src | product_img_url: '600x' }}">
+        <video class="bg-video" autoplay playsinline muted loop>
+          {% if product.metafields.custom_fields["flavour_video"] %}
+            {% assign video = product.metafields.custom_fields["flavour_video"] %}
+          {% else %}
+            {% assign video = 'https://player.vimeo.com/external/553441087.hd.mp4?s=fcbffe60ee362fc2fece4d0e325f38be7565777f&profile_id=175' %}
+          {% endif %}
+          <source src="{{ video }}" type="video/mp4">
+        </video>
+        <img class="spinner" src="{{ 'icon-spinner.png' | asset_img_url: '400x' }}">
+      </a>
+    </div>
+  </div>
+  {% include 'add-to-cart-button', product, hover: false %}
+</div>
+<div class="product-content">
+  <div class="title">{{ product.title }}</div>
+  <div class="wrapper">
+    <span class="price">{{ product.price | money }}</span>
+    <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+  </div>
+  {% if product.handle contains 'dairy-free' %}
+    <div class="dairy-free-badge">DAIRY FREE</div>
+  {% endif %}
+</div>

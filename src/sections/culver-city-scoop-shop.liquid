@@ -1,0 +1,76 @@
+<section class="page-hero">
+  <img class="w-100 hide-mobile" src="{{ section.settings.hero-img | img_url: '2000x' }}">
+  <img class="w-100 hide-desktop" src="{{ section.settings.hero-img-xs | img_url: '800x' }}">
+
+  <div class="blocker"></div>
+
+  <div class="text-container flex-container">
+    <div>
+      <h1 class="title">{{ section.settings.title }}</h1>
+      {% comment %} <div class="desc">{{ section.settings.desc }}</div> {% endcomment %}
+    </div>
+  </div>
+</section>
+
+<section class="image-with-text">
+  <div class="wrapper">
+    <div class="column">
+      <div class="flex-container-left-align">
+        <div>
+          <h2 class="title">{{ section.settings.title-1 }}</h2>
+          <div class="desc">{{ section.settings.desc-1 }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <img class="w-100" src="{{ section.settings.img-1 | img_url: '800x' }}">
+    </div>
+  </div>
+</section>
+
+{% schema %}
+	{
+		"name": "Culver City",
+		"settings": [
+			{
+				"type": "text",
+				"id": "title",
+				"label": "Title"
+			},
+			{
+				"type": "richtext",
+				"id": "desc",
+				"label": "Body Content"
+			},
+      {
+				"type": "image_picker",
+				"id": "hero-img",
+				"label": "Hero Image - Desktop"
+			},
+      {
+				"type": "image_picker",
+				"id": "hero-img-xs",
+				"label": "Hero Image - Mobile"
+			},
+      {
+        "type": "header",
+        "content": "Image and Text Block"
+      },
+      {
+				"type": "text",
+				"id": "title-1",
+				"label": "Title"
+			},
+			{
+				"type": "richtext",
+				"id": "desc-1",
+				"label": "Body Content"
+			},
+      {
+				"type": "image_picker",
+				"id": "img-1",
+				"label": "Image"
+			}
+		]
+	}
+{% endschema %}

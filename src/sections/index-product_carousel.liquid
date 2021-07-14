@@ -1,0 +1,171 @@
+<section id="build-order" class="product-carousel flickity-section">
+  <h2 class="title">{{ section.settings.title }}</h2>
+
+  <div class="wrapper">
+    <div class="column">
+      <img class="image-left" src="{{ section.settings.image | img_url: '1000x' }}">
+    </div>
+    <div class="column">
+      <div class="product-carousel desktop">
+        {% for block in section.blocks %}
+          {% assign product = all_products[block.settings.product] %}
+          {% if product.metafields.custom_fields["flavour_video"] %}
+            {% assign video = product.metafields.custom_fields["flavour_video"] %}
+          {% else %}
+            {% assign video = 'https://player.vimeo.com/external/553441087.hd.mp4?s=fcbffe60ee362fc2fece4d0e325f38be7565777f&profile_id=175' %}
+          {% endif %}
+          <div class="carousel-cell" data-title="{{ product.title }}" data-desc="{{ block.settings.description }}" data-handle="{{ product.handle }}" data-id="{{ product.variants.first.id }}" data-video="{{ video }}">
+            <img src="{{ product.images[0].src | product_img_url: '600x' }}">
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="product-carousel mobile">
+        {% for block in section.blocks %}
+          {% assign product = all_products[block.settings.product] %}
+          {% if product.metafields.custom_fields["flavour_video"] %}
+            {% assign video = product.metafields.custom_fields["flavour_video"] %}
+          {% else %}
+            {% assign video = 'https://player.vimeo.com/external/553441087.hd.mp4?s=fcbffe60ee362fc2fece4d0e325f38be7565777f&profile_id=175' %}
+          {% endif %}
+          <div class="carousel-cell" data-title="{{ product.title }}" data-desc="{{ block.settings.description }}" data-handle="{{ product.handle }}" data-id="{{ product.variants.first.id }}" data-video="{{ video }}" data-f-image="{{ block.settings.fallback-image | img_url: '900x' }}">
+            <img src="{{ product.images[0].src | product_img_url: '600x' }}">
+          </div>
+        {% endfor %}
+      </div>
+
+      {% assign product1 = all_products[section.blocks[0].settings.product] %}
+      {% if product1.metafields.custom_fields["flavour_video"] %}
+        {% assign video = product1.metafields.custom_fields["flavour_video"] %}
+      {% else %}
+        {% assign video = 'https://player.vimeo.com/external/553441087.hd.mp4?s=fcbffe60ee362fc2fece4d0e325f38be7565777f&profile_id=175' %}
+      {% endif %}
+      <video id="carousel-product-video" class="bg-video" autoplay playsinline muted loop data-fallback-image="{{ section.blocks[0].settings.fallback-image | img_url: '900x' }}">
+        <source src="{{ video }}" type="video/mp4">
+      </video>
+
+      <div id="carousel-product-content" class="product-content">
+        <div class="title">{{ product1.title }}</div>
+        <div class="desc">{{ section.blocks[0].settings.description }}</div>
+        {% include 'add-to-cart-button', product1, hover: true %}
+        <a href="{{ product1.url }}" class="cta">LEARN MORE</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(() => {
+      var options1 = {
+                        cellAlign: 'left',
+                        contain: true,
+                        pageDots: false,
+                        imagesLoaded: true,
+                        wrapAround: true,
+                        adaptiveHeight: false
+                      },
+          options2 = {
+                        contain: true,
+                        pageDots: false,
+                        imagesLoaded: true,
+                        wrapAround: true,
+                        prevNextButtons: false,
+                        adaptiveHeight: false
+                      },
+
+      $productCarousel1 = $('.product-carousel.desktop').flickity(options1),
+      $productCarousel2 = $('.product-carousel.mobile').flickity(options2);
+
+      $productCarousel1.on('change.flickity', (event,index) => {
+        var selectedProduct = $('.product-carousel.desktop .carousel-cell.is-selected'),
+            title = selectedProduct.data('title'),
+            description = selectedProduct.data('desc'),
+            handle = selectedProduct.data('handle'),
+            id = selectedProduct.data('id'),
+            video = selectedProduct.data('video');
+
+        updateContent(title, description, handle, id, video, '');
+      });
+
+      $productCarousel2.on('change.flickity', (event,index) => {
+        var selectedProduct = $('.product-carousel.mobile .carousel-cell.is-selected'),
+            title = selectedProduct.data('title'),
+            description = selectedProduct.data('desc'),
+            handle = selectedProduct.data('handle'),
+            id = selectedProduct.data('id'),
+            video = selectedProduct.data('video'),
+            fallback = selectedProduct.data('f-image');
+
+        updateContent(title, description, handle, id, video, fallback);
+      });
+
+      $(window).on('resize', function(){
+        $productCarousel1.flickity(options1);
+      });
+
+      function updateContent(title, description, handle, id, video, fallback) {
+        $('#carousel-product-content .title').text(title);
+        $('#carousel-product-content .desc').text(description);
+        $('#carousel-product-content .variant').val(id);
+        $('#carousel-product-content button').data('handle', handle);
+        $('#carousel-product-content button').data('handle', handle);
+        $('#carousel-product-content input.quantity').val(1);
+        $('#carousel-product-content a.cta').attr('href',`/products/${handle}`);
+        $('#carousel-product-video source').attr('src', video);
+        $('#carousel-product-video')[0].load();
+
+        if($('#carousel-product-fallback').length && fallback) {
+          $('#carousel-product-fallback').attr('src', fallback);
+        }
+      }
+    })
+  </script>
+</section>
+
+{% schema %}
+  {
+    "name": "Product Carousel",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Section Title",
+        "default": "ICE CREAM SAMMIES - FEATURED FLAVORS"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "product",
+        "name": "Product",
+        "settings": [
+          {
+            "type": "product",
+            "id": "product",
+            "label": "Product"
+          },
+          {
+            "type": "textarea",
+            "id": "description",
+            "label": "Description"
+          },
+          {
+            "type": "image_picker",
+            "id": "fallback-image",
+            "label": "Mobile Video Fallback Image",
+            "info": "Image shown when video fails to play on mobile low battery mode"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Product Carousel",
+        "category": "Custom"
+      }
+    ]
+  }
+{% endschema %}

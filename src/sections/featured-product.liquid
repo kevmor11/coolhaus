@@ -9,6 +9,7 @@
 {%- assign image_position = section.settings.image_position -%}
 {%- assign image_size = section.settings.image_size -%}
 {%- assign arrows = section.settings.product_slideshow_arrows -%}
+{%- assign hide_mobile = section.settings.hide_mobile -%}
 {%- assign enable_video_looping = section.settings.enable_video_looping -%}
 {%- assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
 {%- assign featured_media_id = featured_media.id -%}
@@ -32,7 +33,7 @@
 <style>.shopify-payment-button {margin-left: auto !important; margin-right: auto !important;}</style>
 {%- endif -%}
 
-<section class="product container-wrap js-product-template clearfix row featured-product--{{section.id}} js-product-template--{{section.id}} featured-product {% if onboarding_product %}onboarding-product{% endif %}"
+<section class="product container-wrap js-product-template clearfix row featured-product--{{section.id}} js-product-template--{{section.id}} featured-product {% if onboarding_product %}onboarding-product{% endif %}{% if hide_mobile %}hide-mobile{% endif %}"
 	data-section-type="product"
 	data-section-id="{{ section.id }}"
 	data-show_reviews="{{ show_reviews }}"
@@ -84,7 +85,7 @@
 					{%- endif -%}
 				</div>
 
-				{%- unless onboarding_product -%}
+				{% comment %} {%- unless onboarding_product -%}
 					{%- if product.media.size > 1 -%}
 						<div class="productImgSlider-nav js-productImgSlider-nav">
 							{%- comment -%} Show Featured media thumbnail first {%- endcomment -%}
@@ -102,7 +103,7 @@
 							{%- endfor -%}
 						</div>
 					{%- endif -%}
-				{%- endunless -%}
+				{%- endunless -%} {% endcomment %}
 			</div>
 			<!-- end product-images -->
 
@@ -111,7 +112,7 @@
 
 					{%- unless onboarding_product -%}
 						<div class="product-title__wrapper block s1">
-							<h2 class="product-title"><a href="{{ product.url }}">{{ product.title | escape }}</a></h2>
+							<h2 class="product-title"><a href="{{ product.url }}">{{ product.title | escape | upcase }}</a></h2>
 
 							{%- render 'product-price', product: product -%}
 
@@ -188,6 +189,13 @@
 			{{ product.media | where: 'media_type', 'model' | json }}
 		</script>
 	{%- endunless -%}
+
+	{% comment %} Shop All Link {% endcomment %}
+	{%- if section.settings.share_button_url -%}
+		<div class="row row-med u-center button-wrapper">
+			<a href="{{ section.settings.share_button_url }}" class="button button">{{ section.settings.share_button }}</a>
+		</div>
+	{%- endif -%}
 </section>
 
 {% schema %}
@@ -195,6 +203,11 @@
 	"name": "Featured product",
 	"class": "shopify-section--featured-product",
 	"settings": [
+		{
+			"type": "checkbox",
+			"id": "hide_mobile",
+			"label": "Hide on Mobile?"
+		},
 		{
 			"type": "product",
 			"id": "product",
@@ -280,6 +293,22 @@
 			"id": "enable_video_looping",
 			"label": "Enable video looping",
 			"default": false
+		},
+		{
+			"type": "header",
+			"content": "CTA Button"
+		},
+		{
+			"type": "text",
+			"id": "share_button",
+			"label": "Button Text",
+			"default": "Explore All"
+		},
+		{
+			"type": "url",
+			"id": "share_button_url",
+			"label": "Button URL",
+			"info": "Button hidden if this is left empty"
 		}
 	],
 	"presets": [

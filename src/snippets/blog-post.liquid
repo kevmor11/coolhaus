@@ -78,7 +78,16 @@
 
 <div class="{{ article_class }}"{% if settings.transition_grid_items %} data-animation="moFadeInUp"{% endif %} data-blog-post>
 	<div class="blogModule-posts__post-block">
-		{{- article_image -}}
+		{% unless template.name == 'blog' %}
+			<div class="blog-hover-wrapper">
+				<div class="flex-container">
+					<img class="blog-hover" src="{{ 'blog-hover.jpg' | asset_img_url: '700x' }}">
+				</div>
+			</div>
+		{% endunless %}
+		<div class="image-wrapper">
+			{{- article_image -}}
+		</div>
 
 		{%- if section.settings.tags -%}
 			<div class="post-tags">

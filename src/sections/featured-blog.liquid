@@ -27,6 +27,7 @@
 						<p>{{ text }}</p>
 					</div>
 				{%- endif -%}
+				<img class="logos" src="{{ section.settings.logos | img_url: '800x' }}">
 			</div>
 		</div>
 	{%- endunless -%}
@@ -47,7 +48,14 @@
 
 	{%- if cta != blank -%}
 		<div class="row row-med u-center button-wrapper">
-			<a href="{{ blog_link }}" class="button button--{{ section.settings.button_style }}">{{ cta }}</a>
+			<div class="hover-button-wrapper blog">
+				<span class="hover-cta">
+					<a class="button cta" href="{{ blog_link }}">{{ cta }}</a>
+					<div class="border-wrapper flex-container">
+						<img class="cta" src="{{ 'cta-hover.png' | asset_img_url: '200x' }}">
+					</div>
+				</span>
+			</div>
 		</div>
 	{%- endif -%}
 </section>
@@ -76,6 +84,11 @@
 				"type": "textarea",
 				"id": "text",
 				"label": "Text"
+			},
+			{
+				"type": "image_picker",
+				"id": "logos",
+				"label": "Logos"
 			},
 			{
 				"type": "text",

@@ -28,7 +28,7 @@
 {%- endif -%}
 
 <div data-section-id="{{ section.id }}" data-section-type="product">
-	<section class="product container-wrap product-layout--{{ product_layout }} js-product-template js-product-template--{{ section.id }}"
+	<section class="product product-template container-wrap product-layout--{{ product_layout }} js-product-template js-product-template--{{ section.id }}"
 		data-show_reviews="{{ show_reviews }}"
 		data-yotpo="{{ settings.enable_yotpo }}"
 		data-yotpo-id="{{ settings.yotpo_ID }}"
@@ -42,105 +42,139 @@
 			{%- endif -%}
 			<div class="row--{{ product_layout }} js-row--{{ product_layout }}">
 				<div class="product-layout-{{ layout }}--images product-layout-images product-layout-images--{{ image_size }} xxl_s12 xl_s12 lg_s12 med_s12 s1">
-					{%- if product_layout == 'slideshow' -%}
-						<div class="productImgSlider{% if is_single_media %} productImgSlider--single{% endif %}" data-product-single-media-group>
-							<div class="js-productImgSlider js-productImgContainer" id="js-productImgSlider--{{ section.id }}" data-lightbox="{{ lightbox }}" data-dots="{{ dots }}" data-arrows="{{ arrows }}" data-product-single-media-slider>
-								{%- comment -%} Show Featured media first {%- endcomment -%}
-								{%- for media in product.media -%}
-									{%- if media.id == featured_media_id -%}
-										{%- render 'media', media: media, featured_media: featured_media, is_single_media: is_single_media -%}
-									{%- endif -%}
-								{%- endfor -%}
+					<div class="row--{{ product_layout }}">
+						{% comment %} <div class="s1 med_s15">
+							{%- unless is_single_media -%}
+								<div class="productImgSlider-nav js-productImgSlider-nav nav-desktop" data-product-single-media-thumbs>
+									{%- for media in product.media -%}
+										{%- if media.id == featured_media_id -%}
+											{%- render 'media-thumb', media: media, index: forloop.index -%}
+										{%- endif -%}
+									{%- endfor -%}
 
-								{%- comment -%} Loop product media skipping the featured {%- endcomment -%}
-								{%- for media in product.media -%}
-									{%- if media.id != featured_media_id -%}
-										{%- render 'media', media: media, featured_media: featured_media, is_single_media: is_single_media -%}
-									{%- endif -%}
-								{%- endfor -%}
+									{%- comment -%} Loop product media thumbnails skipping the featured {%- endcomment -%}
+									{%- for media in product.media -%}
+										{%- if media.id != featured_media_id -%}
+											{%- render 'media-thumb', media: media, index: forloop.index -%}
+										{%- endif -%}
+									{%- endfor -%}
+								</div>
+							{%- endunless -%}
+						</div> {% endcomment %}
+						<div class="s1">
+						{% comment %} <div class="s1 med_s45"> {% endcomment %}
+							<div class="video-wrapper">
+								<video class="bg-video" autoplay playsinline muted loop>
+									{% if product.metafields.custom_fields["flavour_video"] %}
+										{% assign video = product.metafields.custom_fields["flavour_video"] %}
+									{% else %}
+										{% assign video = 'https://player.vimeo.com/external/553441087.hd.mp4?s=fcbffe60ee362fc2fece4d0e325f38be7565777f&profile_id=175' %}
+									{% endif %}
+									<source src="{{ video }}" type="video/mp4">
+								</video>
+								{%- if product_layout == 'slideshow' -%}
+									<div class="productImgSlider{% if is_single_media %} productImgSlider--single{% endif %}" data-product-single-media-group>
+										<div class="js-productImgSlider js-productImgContainer" id="js-productImgSlider--{{ section.id }}" data-lightbox="{{ lightbox }}" data-dots="{{ dots }}" data-arrows="{{ arrows }}" data-product-single-media-slider>
+											{%- comment -%} Show Featured media first {%- endcomment -%}
+											{%- for media in product.media -%}
+												{%- if media.id == featured_media_id -%}
+													{%- render 'media', media: media, featured_media: featured_media, is_single_media: is_single_media -%}
+												{%- endif -%}
+											{%- endfor -%}
+
+											{%- comment -%} Loop product media skipping the featured {%- endcomment -%}
+											{%- for media in product.media -%}
+												{%- if media.id != featured_media_id -%}
+													{%- render 'media', media: media, featured_media: featured_media, is_single_media: is_single_media -%}
+												{%- endif -%}
+											{%- endfor -%}
+										</div>
+
+										{%- if first_3d_model -%}
+											<button
+												aria-label="{{ 'products.product_page.view_in_space_label' | t }}"
+												class="btn btn--ar product-single__view-in-space"
+												data-shopify-xr
+												data-shopify-model3d-id="{{ first_3d_model.id }}"
+												data-shopify-title="{{ product.title | escape }}"
+												data-shopify-xr-hidden>
+												{%- render 'icon-media-model' -%}
+												<span class='product-single__view-in-space-text'>{{ 'products.product_page.view_in_space' | t }}</span>
+											</button>
+										{%- endif -%}
+									</div>
+								{%- else -%}
+									<video class="bg-video" autoplay playsinline muted loop>
+										<source src="{{ video }}" type="video/mp4">
+									</video>
+									<div class="productImgScroller{% if is_single_media %} productImgScroller--single{% endif %}" data-product-single-media-group>
+										<div class="js-productImgScroller js-productImgContainer" data-dots="{{ dots }}" data-arrows="{{ arrows }}" data-lightbox="{{ lightbox }}" data-product-single-media-slider>
+											{%- comment -%} Show Featured media first {%- endcomment -%}
+											{%- for media in product.media -%}
+												{%- if media.id == featured_media_id -%}
+													{%- render 'media', media: media, featured_media: featured_media, is_single_media: is_single_media -%}
+												{%- endif -%}
+											{%- endfor -%}
+
+											{%- comment -%} Loop product media skipping the featured {%- endcomment -%}
+											{%- for media in product.media -%}
+												{%- if media.id != featured_media_id -%}
+													{%- render 'media', media: media, featured_media: featured_media, is_single_media: is_single_media -%}
+												{%- endif -%}
+											{%- endfor -%}
+										</div>
+
+										{%- if first_3d_model -%}
+											<button
+												aria-label="{{ 'products.product_page.view_in_space_label' | t }}"
+												class="btn btn--ar product-single__view-in-space"
+												data-shopify-xr
+												data-shopify-model3d-id="{{ first_3d_model.id }}"
+												data-shopify-title="{{ product.title | escape }}"
+												data-shopify-xr-hidden>
+												{%- render 'icon-media-model' -%}
+												<span class='product-single__view-in-space-text'>{{ 'products.product_page.view_in_space' | t }}</span>
+											</button>
+										{%- endif -%}
+									</div>
+								{%- endif -%}
 							</div>
 
-							{%- if first_3d_model -%}
-								<button
-									aria-label="{{ 'products.product_page.view_in_space_label' | t }}"
-									class="btn btn--ar product-single__view-in-space"
-									data-shopify-xr
-									data-shopify-model3d-id="{{ first_3d_model.id }}"
-									data-shopify-title="{{ product.title | escape }}"
-									data-shopify-xr-hidden>
-									{%- render 'icon-media-model' -%}
-									<span class='product-single__view-in-space-text'>{{ 'products.product_page.view_in_space' | t }}</span>
-								</button>
-							{%- endif -%}
+							{%- unless is_single_media -%}
+								<div class="productImgSlider-nav js-productImgSlider-nav nav-mobile" data-product-single-media-thumbs>
+									{%- for media in product.media -%}
+										{%- if media.id == featured_media_id -%}
+											{%- render 'media-thumb', media: media, index: forloop.index -%}
+										{%- endif -%}
+									{%- endfor -%}
+
+									{%- comment -%} Loop product media thumbnails skipping the featured {%- endcomment -%}
+									{%- for media in product.media -%}
+										{%- if media.id != featured_media_id -%}
+											{%- render 'media-thumb', media: media, index: forloop.index -%}
+										{%- endif -%}
+									{%- endfor -%}
+								</div>
+							{%- endunless -%}
 						</div>
+					</div>
 
-						{%- unless is_single_media -%}
-							<div class="productImgSlider-nav js-productImgSlider-nav" data-product-single-media-thumbs>
-								{%- comment -%} Show Featured media thumbnail first {%- endcomment -%}
-								{%- for media in product.media -%}
-									{%- if media.id == featured_media_id -%}
-										{%- render 'media-thumb', media: media, index: forloop.index -%}
-									{%- endif -%}
-								{%- endfor -%}
+					{% comment %} {%- unless is_single_media -%}
+						<div class="productImgScroller-nav js-productImgScroller-nav" data-product-single-media-thumbs>
+							{%- for media in product.media -%}
+								{%- if media.id == featured_media_id -%}
+									{%- render 'media-thumb', media: media, index: forloop.index -%}
+								{%- endif -%}
+							{%- endfor -%}
 
-								{%- comment -%} Loop product media thumbnails skipping the featured {%- endcomment -%}
-								{%- for media in product.media -%}
-									{%- if media.id != featured_media_id -%}
-										{%- render 'media-thumb', media: media, index: forloop.index -%}
-									{%- endif -%}
-								{%- endfor -%}
-							</div>
-						{%- endunless -%}
-					{%- else -%}
-						<div class="productImgScroller{% if is_single_media %} productImgScroller--single{% endif %}" data-product-single-media-group>
-							<div class="js-productImgScroller js-productImgContainer" data-dots="{{ dots }}" data-arrows="{{ arrows }}" data-lightbox="{{ lightbox }}" data-product-single-media-slider>
-								{%- comment -%} Show Featured media first {%- endcomment -%}
-								{%- for media in product.media -%}
-									{%- if media.id == featured_media_id -%}
-										{%- render 'media', media: media, featured_media: featured_media, is_single_media: is_single_media -%}
-									{%- endif -%}
-								{%- endfor -%}
-
-								{%- comment -%} Loop product media skipping the featured {%- endcomment -%}
-								{%- for media in product.media -%}
-									{%- if media.id != featured_media_id -%}
-										{%- render 'media', media: media, featured_media: featured_media, is_single_media: is_single_media -%}
-									{%- endif -%}
-								{%- endfor -%}
-							</div>
-
-							{%- if first_3d_model -%}
-								<button
-									aria-label="{{ 'products.product_page.view_in_space_label' | t }}"
-									class="btn btn--ar product-single__view-in-space"
-									data-shopify-xr
-									data-shopify-model3d-id="{{ first_3d_model.id }}"
-									data-shopify-title="{{ product.title | escape }}"
-									data-shopify-xr-hidden>
-									{%- render 'icon-media-model' -%}
-									<span class='product-single__view-in-space-text'>{{ 'products.product_page.view_in_space' | t }}</span>
-								</button>
-							{%- endif -%}
+							{%- comment -%} Loop product media thumbnails skipping the featured {%- endcomment -%}
+							{%- for media in product.media -%}
+								{%- if media.id != featured_media_id -%}
+									{%- render 'media-thumb', media: media, index: forloop.index -%}
+								{%- endif -%}
+							{%- endfor -%}
 						</div>
-
-						{%- unless is_single_media -%}
-							<div class="productImgScroller-nav js-productImgScroller-nav" data-product-single-media-thumbs>
-								{%- comment -%} Show Featured media thumbnail first {%- endcomment -%}
-								{%- for media in product.media -%}
-									{%- if media.id == featured_media_id -%}
-										{%- render 'media-thumb', media: media, index: forloop.index -%}
-									{%- endif -%}
-								{%- endfor -%}
-
-								{%- comment -%} Loop product media thumbnails skipping the featured {%- endcomment -%}
-								{%- for media in product.media -%}
-									{%- if media.id != featured_media_id -%}
-										{%- render 'media-thumb', media: media, index: forloop.index -%}
-									{%- endif -%}
-								{%- endfor -%}
-							</div>
-						{%- endunless -%}
-					{%- endif -%}
+					{%- endunless -%} {% endcomment %}
 				</div>
 				<!-- end product-images -->
 
@@ -171,12 +205,18 @@
 								{%- endif -%}
 							</div>
 
+
 							{%- if add_cart_position == 'bottom' and product.description != blank -%}
 								<div class="product-description rte" data-product-description>
 									{{- product_description_content -}}
 								</div>
 							{%- endif -%}
 						</div>
+						{% unless product.handle contains 'gift-card' or product.handle == 'truck-booking'  %}
+							<div class="s1 order-wrapper">
+								<span class="order-min">$60.00 Order Minimum <span class="hide-mobile">for Ice Cream</span></span>
+							</div>
+						{% endunless  %}
 						<div class="product-form block s1">
 							<div data-product-form>
 								{%- render 'product-form' -%}
@@ -206,18 +246,6 @@
 	</section>
 
 	{%- render 'product-tabs' -%}
-
-	{%- if show_reviews or enable_yotpo and yotpo_ID != '' -%}
-		<div class="product__reviews">
-			<div class="container">
-				{%- if enable_yotpo and yotpo_ID != '' -%}
-					{%- render 'yotpo-reviews', product: product -%}
-				{%- else -%}
-					<div id="shopify-product-reviews" data-id="{{ product.id }}">{{ product.metafields.spr.reviews }}</div>
-				{%- endif -%}
-			</div>
-		</div>
-	{%- endif -%}
 
 	{%- if section.blocks.size > 0 -%}
 		{%- for block in section.blocks -%}
@@ -374,21 +402,6 @@
 			"label": "Description H6",
 			"info": "Heading 6 titles will be converted to tab headings, tab content will be everything between the Heading 6 titles. [Product Tabs Documentation](https://modular.helpscoutdocs.com/article/180-how-to-set-up-global-and-unique-product-tabs).",
 			"default": false
-		},
-		{
-			"type": "page",
-			"id": "page_tab_1",
-			"label": "Tab one"
-		},
-		{
-			"type": "page",
-			"id": "page_tab_2",
-			"label": "Tab two"
-		},
-		{
-			"type": "page",
-			"id": "page_tab_3",
-			"label": "Tab three"
 		},
 		{
 			"type": "header",

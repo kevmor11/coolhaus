@@ -1,0 +1,107 @@
+<section class="page-hero">
+  <img class="w-100 hide-mobile" src="{{ section.settings.hero-img | img_url: '2000x' }}">
+  <img class="w-100 hide-desktop" src="{{ section.settings.hero-img-xs | img_url: '800x' }}">
+
+  <div class="blocker"></div>
+
+  <div class="text-container flex-container">
+    <div>
+      <h1 class="title">{{ section.settings.title }}</h1>
+    </div>
+  </div>
+</section>
+
+<section class="image-with-text">
+  <div class="wrapper">
+    <div class="column">
+      <div class="flex-container-left-align">
+        <div>
+          <h3 class="title">{{ section.settings.title-1 }}</h3>
+          <div class="desc">{{ section.settings.desc-1 }}</div>
+          <a class="button button--primary" href="{{ section.settings.button-url }}">{{ section.settings.button-text }}</a>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <img class="w-100" src="{{ section.settings.img-1 | img_url: '800x' }}">
+    </div>
+  </div>
+</section>
+
+<section class="two-images">
+	<div class="wrapper">
+    <div class="column">
+      <img class="w-100" src="{{ section.settings.img-3 | img_url: '1000x' }}">
+    </div>
+		<div class="column text-right">
+      <img class="w-100" src="{{ section.settings.img-4 | img_url: '1000x' }}">
+    </div>
+	</div>
+</section>
+
+{% schema %}
+	{
+		"name": "Corporate Deliveries",
+		"settings": [
+			{
+				"type": "text",
+				"id": "title",
+				"label": "Title"
+			},
+      {
+				"type": "image_picker",
+				"id": "hero-img",
+				"label": "Hero Image - Desktop"
+			},
+      {
+				"type": "image_picker",
+				"id": "hero-img-xs",
+				"label": "Hero Image - Mobile"
+			},
+      {
+        "type": "header",
+        "content": "Image and Text Block"
+      },
+      {
+				"type": "text",
+				"id": "title-1",
+				"label": "Title"
+			},
+			{
+				"type": "richtext",
+				"id": "desc-1",
+				"label": "Body Content"
+			},
+      {
+				"type": "text",
+				"id": "button-text",
+				"label": "Button Text",
+        "default": "Book Now"
+			},
+      {
+				"type": "url",
+				"id": "button-url",
+				"label": "Button URL"
+			},
+      {
+				"type": "image_picker",
+				"id": "img-1",
+				"label": "Image"
+			},
+      {
+        "type": "header",
+        "content": "2 Images"
+      },
+			{
+				"type": "image_picker",
+				"id": "img-3",
+				"label": "Image 1"
+			},
+			{
+				"type": "image_picker",
+				"id": "img-4",
+				"label": "Image 2"
+			}
+		]
+	}
+{% endschema %}

@@ -1,0 +1,482 @@
+{% for block in section.blocks %}
+  {% if block.type == 'hero' %}
+    <section class="page-hero">
+      <img class="w-100 hide-mobile" src="{{ block.settings.hero-img | img_url: '2000x' }}">
+      <img class="w-100 hide-desktop" src="{{ block.settings.hero-img-xs | img_url: '800x' }}">
+
+      <div class="blocker"></div>
+
+      <div class="text-container flex-container">
+        <div>
+          <h1 class="title">{{ block.settings.title }}</h1>
+        </div>
+      </div>
+    </section>
+  {% elsif block.type == 'image-with-text' %}
+    <section class="image-with-text">
+      <div class="wrapper">
+        <div class="column">
+          <div class="flex-container-left-align">
+            <div>
+              <h3 class="title">{{ block.settings.title-1 }}</h3>
+              <div class="desc">{{ block.settings.desc-1 }}</div>
+              <a class="button button--primary" href="{{ block.settings.button-url }}">{{ block.settings.button-text }}</a>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <img class="w-100" src="{{ block.settings.img-1 | img_url: '800x' }}">
+        </div>
+      </div>
+    </section>
+  {% elsif block.type == 'text-block' %}
+    <section class="about-text-section text-center">
+      <div class="text-container">
+        {% if block.settings.text-subtitle %}
+          <p class="subheading-text">{{ block.settings.text-subtitle }}</p>
+        {% endif %}
+        <h2>{{ block.settings.text-title }}</h2>
+        <p style="margin-bottom: 25px;">{{ block.settings.text-desc }}</p>
+        <a class="button button--primary" href="{{ block.settings.text-cta-url }}">{{ block.settings.text-cta-text }}</a>
+      </div>
+    </section>
+  {% elsif block.type == 'text-2-columns' %}
+    <section class="image-with-text text">
+      <div class="wrapper">
+        <h2 class="title">{{ block.settings.two-title }}</h2>
+        <div class="column">
+          <div class="desc">{{ block.settings.two-desc-1 }}</div>
+        </div>
+        <div class="column">
+          <div class="desc">{{ block.settings.two-desc-2 }}</div>
+        </div>
+      </div>
+    </section>
+  {% elsif block.type == 'two-images' %}
+    <section class="two-images">
+      <div class="wrapper">
+        <div class="column">
+          <img class="w-100" src="{{ block.settings.img-3 | img_url: '1000x' }}">
+        </div>
+        <div class="column text-right">
+          <img class="w-100" src="{{ block.settings.img-4 | img_url: '1000x' }}">
+        </div>
+      </div>
+    </section>
+  {% elsif block.type == 'image-full' %}
+    <img class="w-100" src="{{ block.settings.image-full | img_url: '2000x' }}">
+  {% elsif block.type == 'slideshow' %}
+    <section class="buildable-slideshow">
+      <div class="buildable-slider {{ block.settings.slide_height }}">
+        {% if block.settings.slider-image-1 %}
+          <div class="slider">
+            <img src="{{ block.settings.slider-image-1 | img_url: '2000x' }}">
+            <div class="text-container">
+              <h2 data-animation="moPopUp" data-animation-delay="250" class="title slide-content__heading">{{ block.settings.slider-title-1 }}</h2>
+              {% if block.settings.slider-button-text-1 %}
+                <a class="button button--primary" href="{{ block.settings.slider-button-url-1 }}">{{ block.settings.slider-button-text-1 }}</a>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+        {% if block.settings.slider-image-2 %}
+          <div class="slider">
+            <img src="{{ block.settings.slider-image-2 | img_url: '2000x' }}">
+            <div class="text-container">
+              <h2 class="title slide-content__heading">{{ block.settings.slider-title-2 }}</h2>
+              {% if block.settings.slider-button-text-2 %}
+                <a class="button button--primary" href="{{ block.settings.slider-button-url-2 }}">{{ block.settings.slider-button-text-2 }}</a>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+        {% if block.settings.slider-image-3 %}
+          <div class="slider">
+            <img src="{{ block.settings.slider-image-3 | img_url: '2000x' }}">
+            <div class="text-container">
+              <h2 class="title slide-content__heading">{{ block.settings.slider-title-3 }}</h2>
+              {% if block.settings.slider-button-text-3 %}
+                <a class="button button--primary" href="{{ block.settings.slider-button-url-3 }}">{{ block.settings.slider-button-text-3 }}</a>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+        {% if block.settings.slider-image-4 %}
+          <div class="slider">
+            <img src="{{ block.settings.slider-image-4 | img_url: '2000x' }}">
+            <div class="text-container">
+              <h2 class="title slide-content__heading">{{ block.settings.slider-title-4 }}</h2>
+              {% if block.settings.slider-button-text-4 %}
+                <a class="button button--primary" href="{{ block.settings.slider-button-url-4 }}">{{ block.settings.slider-button-text-4 }}</a>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+        {% if block.settings.slider-image-5 %}
+          <div class="slider">
+            <img src="{{ block.settings.slider-image-5 | img_url: '2000x' }}">
+            <div class="text-container">
+              <h2 class="title slide-content__heading">{{ block.settings.slider-title-5 }}</h2>
+              {% if block.settings.slider-button-text-5 %}
+                <a class="button button--primary" href="{{ block.settings.slider-button-url-5 }}">{{ block.settings.slider-button-text-5 }}</a>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+        {% if block.settings.slider-image-6 %}
+          <div class="slider">
+            <img src="{{ block.settings.slider-image-6 | img_url: '2000x' }}">
+            <div class="text-container">
+              <h2 class="title slide-content__heading">{{ block.settings.slider-title-6 }}</h2>
+              {% if block.settings.slider-button-text-6 %}
+                <a class="button button--primary" href="{{ block.settings.slider-button-url-6 }}">{{ block.settings.slider-button-text-6 }}</a>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+      <div class="prev">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 1024 1024" class="icon icon-submit"><path d="M1023.998 511.724v-6.44c-0.108-1.288-0.706-2.417-1.605-3.215l-0.005-0.005c0-1.61-1.61-1.61-1.61-3.22s-1.61-1.61-1.61-3.22c-0.89 0-1.61-0.72-1.61-1.61v0l-365.484-378.365c-6.058-5.789-14.286-9.354-23.346-9.354s-17.288 3.564-23.358 9.366l0.013-0.013c-6.101 5.61-9.909 13.631-9.909 22.541s3.81 16.931 9.888 22.52l0.022 0.020 307.522 318.793h-880.705c-17.785 0-32.201 14.417-32.201 32.201s14.417 32.201 32.201 32.201v0h887.145l-313.962 318.793c-5.226 5.704-8.429 13.338-8.429 21.72 0 9.19 3.851 17.481 10.025 23.347l0.014 0.013c5.61 6.101 13.631 9.909 22.541 9.909s16.931-3.81 22.52-9.888l0.020-0.022 363.874-370.315c0-1.61 0-1.61 1.61-3.22 0.89 0 1.61-0.72 1.61-1.61v0c0-1.61 1.61-1.61 1.61-3.22h1.61v-3.22c0.904-0.803 1.502-1.932 1.608-3.203l0.002-0.017v-11.27z"></path></svg>      </div>
+      <div class="next">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 1024 1024" class="icon icon-submit"><path d="M1023.998 511.724v-6.44c-0.108-1.288-0.706-2.417-1.605-3.215l-0.005-0.005c0-1.61-1.61-1.61-1.61-3.22s-1.61-1.61-1.61-3.22c-0.89 0-1.61-0.72-1.61-1.61v0l-365.484-378.365c-6.058-5.789-14.286-9.354-23.346-9.354s-17.288 3.564-23.358 9.366l0.013-0.013c-6.101 5.61-9.909 13.631-9.909 22.541s3.81 16.931 9.888 22.52l0.022 0.020 307.522 318.793h-880.705c-17.785 0-32.201 14.417-32.201 32.201s14.417 32.201 32.201 32.201v0h887.145l-313.962 318.793c-5.226 5.704-8.429 13.338-8.429 21.72 0 9.19 3.851 17.481 10.025 23.347l0.014 0.013c5.61 6.101 13.631 9.909 22.541 9.909s16.931-3.81 22.52-9.888l0.020-0.022 363.874-370.315c0-1.61 0-1.61 1.61-3.22 0.89 0 1.61-0.72 1.61-1.61v0c0-1.61 1.61-1.61 1.61-3.22h1.61v-3.22c0.904-0.803 1.502-1.932 1.608-3.203l0.002-0.017v-11.27z"></path></svg>
+      </div>
+      <script type="text/javascript">
+        $(document).ready(function(){
+          $('.buildable-slider').slick({
+            arrows: true,
+            slidesToShow: 1,
+            infinite: true,
+            prevArrow: $('.prev'),
+            nextArrow: $('.next')
+          });
+        });
+      </script>
+      <link rel="stylesheet" type="text/css" href="http://kenwheeler.github.io/slick/slick/slick-theme.css"/>
+    </section>
+  {% endif %}
+{% endfor %}
+
+{% schema %}
+  {
+    "name": "Buildable Sections",
+    "settings": [],
+    "blocks": [
+      {
+        "name": "Hero",
+        "type": "hero",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "richtext",
+            "id": "desc",
+            "label": "Body Content"
+          },
+          {
+            "type": "image_picker",
+            "id": "hero-img",
+            "label": "Hero Image - Desktop"
+          },
+          {
+            "type": "image_picker",
+            "id": "hero-img-xs",
+            "label": "Hero Image - Mobile"
+          }
+        ]
+      },
+      {
+        "name": "Image and Text",
+        "type": "image-with-text",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title-1",
+            "label": "Title"
+          },
+          {
+            "type": "richtext",
+            "id": "desc-1",
+            "label": "Body Content"
+          },
+          {
+            "type": "text",
+            "id": "button-text",
+            "label": "Button Text",
+            "default": "Book Now"
+          },
+          {
+            "type": "url",
+            "id": "button-url",
+            "label": "Button URL"
+          },
+          {
+            "type": "image_picker",
+            "id": "img-1",
+            "label": "Image"
+          }
+        ]
+      },
+      {
+        "name": "Text Block",
+        "type": "text-block",
+        "settings": [
+          {
+            "type": "text",
+            "id": "text-subtitle",
+            "label": "Subtitle"
+          },
+          {
+            "type": "textarea",
+            "id": "text-title",
+            "label": "Title"
+          },
+          {
+            "type": "textarea",
+            "id": "text-desc",
+            "label": "Description"
+          },
+          {
+            "type": "text",
+            "id": "text-cta-text",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "text-cta-url",
+            "label": "CTA URL"
+          }
+        ]
+      },
+      {
+        "name": "Text Block - Two Columns",
+        "type": "text-2-columns",
+        "settings": [
+          {
+            "type": "text",
+            "id": "two-title",
+            "label": "Title"
+          },
+          {
+            "type": "textarea",
+            "id": "two-desc-1",
+            "label": "Text - Left Column"
+          },
+          {
+            "type": "textarea",
+            "id": "two-desc-2",
+            "label": "Text - Right Column"
+          }
+        ]
+      },
+      {
+        "name": "Two Images",
+        "type": "two-images",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "img-3",
+            "label": "Image 1"
+          },
+          {
+            "type": "image_picker",
+            "id": "img-4",
+            "label": "Image 2"
+          }
+        ]
+      },
+      {
+        "name": "Image Full Width",
+        "type": "image-full",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image-full",
+            "label": "Image"
+          }
+        ]
+      },
+      {
+        "name": "Slideshow",
+        "type": "slideshow",
+        "settings": [
+          {
+            "type": "select",
+            "id": "slide_height",
+            "label": "Slide height",
+            "default": "original-height",
+            "options": [
+              {
+                "value": "original-height",
+                "label": "Image height"
+              },
+              {
+                "value": "seven-fifty-height-hero",
+                "label": "750px"
+              },
+              {
+                "value": "sixty-fifty-height-hero",
+                "label": "650px"
+              },
+              {
+                "value": "five-fifty-height-hero",
+                "label": "550px"
+              },
+              {
+                "value": "four-fifty-height-hero",
+                "label": "450px"
+              }
+            ]
+          },
+          {
+            "type": "header",
+            "content": "Slide 1",
+            "info": "Slides will be hidden if image field is empty"
+          },
+          {
+            "type": "image_picker",
+            "id": "slider-image-1",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "slider-title-1",
+            "label": "Title"
+          },
+          {
+            "type": "text",
+            "id": "slider-button-text-1",
+            "label": "Button Text"
+          },
+          {
+            "type": "url",
+            "id": "slider-button-url-1",
+            "label": "Button URL"
+          },
+          {
+            "type": "header",
+            "content": "Slide 2"
+          },
+          {
+            "type": "image_picker",
+            "id": "slider-image-2",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "slider-title-2",
+            "label": "Title"
+          },
+          {
+            "type": "text",
+            "id": "slider-button-text-2",
+            "label": "Button Text"
+          },
+          {
+            "type": "url",
+            "id": "slider-button-url-2",
+            "label": "Button URL"
+          },
+          {
+            "type": "header",
+            "content": "Slide 3"
+          },
+          {
+            "type": "image_picker",
+            "id": "slider-image-3",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "slider-title-3",
+            "label": "Title"
+          },
+          {
+            "type": "text",
+            "id": "slider-button-text-3",
+            "label": "Button Text"
+          },
+          {
+            "type": "url",
+            "id": "slider-button-url-3",
+            "label": "Button URL"
+          },
+          {
+            "type": "header",
+            "content": "Slide 4"
+          },
+          {
+            "type": "image_picker",
+            "id": "slider-image-4",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "slider-title-4",
+            "label": "Title"
+          },
+          {
+            "type": "text",
+            "id": "slider-button-text-4",
+            "label": "Button Text"
+          },
+          {
+            "type": "url",
+            "id": "slider-button-url-4",
+            "label": "Button URL"
+          },
+          {
+            "type": "header",
+            "content": "Slide 5"
+          },
+          {
+            "type": "image_picker",
+            "id": "slider-image-5",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "slider-title-5",
+            "label": "Title"
+          },
+          {
+            "type": "text",
+            "id": "slider-button-text-5",
+            "label": "Button Text"
+          },
+          {
+            "type": "url",
+            "id": "slider-button-url-5",
+            "label": "Button URL"
+          },
+          {
+            "type": "header",
+            "content": "Slide 6"
+          },
+          {
+            "type": "image_picker",
+            "id": "slider-image-6",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "slider-title-6",
+            "label": "Title"
+          },
+          {
+            "type": "text",
+            "id": "slider-button-text-6",
+            "label": "Button Text"
+          },
+          {
+            "type": "url",
+            "id": "slider-button-url-6",
+            "label": "Button URL"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

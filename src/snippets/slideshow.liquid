@@ -6,6 +6,7 @@
 {%- else -%}
 	{%- assign showNavDots = true -%}
 {%- endif -%}
+{%- assign hide_mobile = section.settings.hide-mobile -%}
 {%- assign showNavArrows = section.settings.showNavArrows -%}
 {%- assign transition = section.settings.transition -%}
 {%- assign autoplay = section.settings.autoplay -%}
@@ -33,7 +34,7 @@
 
 {%- comment %} Section {% endcomment %}
 <section id="hero--{{ section.id }}"
-	class="{{ slideshow_class }}"
+	class="{{ slideshow_class }} {% if hide_mobile %}hide-mobile{% endif %}"
 	data-section-type="slideshow"
 	data-slick="{ 'arrows':{{ showNavArrows }}, 'dots':{{ showNavDots }}, 'dotsClass':'slick-dots hero-dots-row row', 'autoplaySpeed':{{duration}}, 'speed':{{ speed }}, 'adaptiveHeight':{{ original_height }}, 'pauseOnHover':{{ hover }}, 'fade':{{ fadeMode }}, 'infinite':true }"
 	data-image-height="{{ section.settings.slide_height }}"

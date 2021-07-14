@@ -18,12 +18,12 @@ Note that comment.created_at will only be defined if the comment did not have an
 
 <section class="page-title page-title--article container-wrap">
 	<div class="container">
-		<div class="row row-sm">
+		<div class="row">
 			<div class="block">
 				<h1>{{ article.title }}</h1>
 
 				<p class="post-meta">
-					<span class="post-meta__author">{{- 'blog.article.by_author' | t: author: author -}}</span>
+					{% comment %} <span class="post-meta__author">{{- 'blog.article.by_author' | t: author: author -}}</span> {% endcomment %}
 					<span class="post-meta__date"><time pubdate datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: '%B %d, %Y' }}</time></span>
 					{%- if blog.comments_enabled? -%}
 					<span class="post-meta__comment-count"><a href="#comments" data-anchor-link>{{ 'blog.blog_list_view.comment_count' | t: count: article.comments_count }}</a></span>
@@ -35,7 +35,7 @@ Note that comment.created_at will only be defined if the comment did not have an
 </section>
 <div class="article__content container-wrap">
 	<div class="container text-content">
-		<div class="row row-sm rte">
+		<div class="row rte">
 			{%- if article.image -%}
 				<div class="article__image lazyload" data-bgset="{% render 'bgset', image: article.image %}" data-sizes="auto" data-parent-fit="cover"></div>
 				<noscript>
@@ -47,7 +47,7 @@ Note that comment.created_at will only be defined if the comment did not have an
 		</div>
 	</div>
 	<div class="article-footer container">
-		<div class="row row-sm">
+		<div class="row">
 			{%- render 'accent-line' -%}
 
 			{% if article.tags.size > 0 %}
@@ -90,7 +90,7 @@ Note that comment.created_at will only be defined if the comment did not have an
 	{%- if blog.comments_enabled? -%}
 		{%- paginate article.comments by 4 -%}
 			<div class="article-comments container">
-				<div class="row row-sm">
+				<div class="row">
 					{%- if blog.comments_enabled? -%}
 						<h4 class="meta-comments">{{ 'blog.article.comment_count' | t: count: article.comments_count }}</h4>
 					{%- endif -%}

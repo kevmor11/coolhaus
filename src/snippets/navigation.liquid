@@ -1,8 +1,18 @@
 {% comment %} Site Navigation {% endcomment %}
 {%- assign menuPrimary = section.settings.menu_list -%}
-{%- assign image = section.settings.meganav_image -%}
-{%- assign image_heading = section.settings.meganav_image_heading -%}
-{%- assign image_link = section.settings.meganav_image_link -%}
+{% if is_hamburger_nav %}
+	{%- assign menuPrimary = 'mobile-menu' -%}
+{% endif %}
+{%- assign image_shop = section.settings.meganav_image_shop -%}
+{%- assign image_link_shop = section.settings.meganav_image_link_shop -%}
+{%- assign image_link_text_shop = section.settings.meganav_image_link_text_shop -%}
+{%- assign image_fu = section.settings.meganav_image_fu -%}
+{%- assign image_link_fu = section.settings.meganav_image_link_fu -%}
+{%- assign image_link_text_fu = section.settings.meganav_image_link_text_fu -%}
+{%- assign image_catering_initial = section.settings.meganav_image_catering_initial -%}
+{%- assign image_catering = section.settings.meganav_image_catering -%}
+{%- assign image_link_catering = section.settings.meganav_image_link_catering -%}
+{%- assign image_link_text_catering = section.settings.meganav_image_link_text_catering -%}
 {%- assign image_aspect_ratio = section.settings.image_aspect_ratio | times: 100 -%}
 
 {%- assign has_meganav = false -%}
@@ -31,7 +41,7 @@
 
 			<li class="menu-item{% if has_sub_menu == true %} has-submenu{% endif %} {% if is_meganav %}menu-item--meganav{% else %}menu-item--dropdown{% endif %}">
 				<!-- LINKS -->
-				<a href="{{ link.url }}">{{ link.title | escape }}</a>
+				<a class="parent-link" href="{{ link.url }}">{{ link.title | escape }}</a>
 				{%- if has_sub_menu and is_hamburger_nav == false -%}
 					<button class="toggle-submenu" aria-haspopup="true" aria-expanded="false" aria-label="{{ link.title | escape }}">
 						{%- render 'icon-arrow' -%}
@@ -53,43 +63,92 @@
 
 					{%- comment -%} MEGAMENU IMAGE AND TEXT {%- endcomment -%}
 					{%- if is_meganav -%}
-						{%- if image != blank or image_heading != blank -%}
-							<div class="megamenu__image">
-								{%- if image != blank -%}
+						{%- if image_shop != blank -%}
+							<div class="megamenu__image shop">
+								{%- if image_shop != blank -%}
 									{%- capture megamenu_image -%}
 										<div class="megamenu__image-bg lazyload"
-											data-bgset="{% render 'bgset', image: image %}"
+											data-bgset="{% render 'bgset', image: image_shop %}"
 											data-sizes="auto"
 											data-parent-fit="cover"
 											style="padding-top: {{ image_aspect_ratio }}%;">
 										</div>
 										<noscript>
-											<div class="megamenu__image-bg" style="background-image: url({{ image | img_url: '1024x' }}); padding-top: {{ image_aspect_ratio }}%;"></div>
+											<div class="megamenu__image-bg" style="background-image: url({{ image_shop | img_url: '1024x' }}); padding-top: {{ image_aspect_ratio }}%;"></div>
 										</noscript>
 									{%- endcapture -%}
 
-									{%- unless image_link == blank -%}
-										<a href="{{ image_link }}" class="megamenu__image-inner">
+									{%- unless image_link_shop == blank -%}
+										<a href="{{ image_link_shop }}" class="megamenu__image-inner">
 											{{- megamenu_image -}}
 										</a>
+										{%- unless image_link_text_shop == blank -%}
+											<a class="megamenu__link" href="{{ image_link_shop }}">{{ image_link_text_shop }}</a>
+										{%- endunless -%}
 									{%- else -%}
 										<div class="megamenu__image-inner">
 											{{- megamenu_image -}}
 										</div>
 									{%- endunless -%}
 								{%- endif -%}
+							</div>
 
-								{%- unless image_heading == blank -%}
-									<h4>
-										<span>
-											{%- if image_link != blank -%}
-												<a href="{{ image_link }}">{{ image_heading }}</a>
-											{%- else -%}
-												{{- image_heading -}}
-											{%- endif -%}
-										</span>
-									</h4>
-								{%- endunless -%}
+							<div class="megamenu__image find-us">
+								{%- if image_shop != blank -%}
+									{%- capture megamenu_image -%}
+										<div class="megamenu__image-bg lazyload"
+											data-bgset="{% render 'bgset', image: image_fu %}"
+											data-sizes="auto"
+											data-parent-fit="cover"
+											style="padding-top: {{ image_aspect_ratio }}%;">
+										</div>
+										<noscript>
+											<div class="megamenu__image-bg" style="background-image: url({{ image_fu | img_url: '1024x' }}); padding-top: {{ image_aspect_ratio }}%;"></div>
+										</noscript>
+									{%- endcapture -%}
+
+									{%- unless image_link_fu == blank -%}
+										<a href="{{ image_link_fu }}" class="megamenu__image-inner">
+											{{- megamenu_image -}}
+										</a>
+										{%- unless image_link_text_fu == blank -%}
+											<a class="megamenu__link" href="{{ image_link_fu }}">{{ image_link_text_fu }}</a>
+										{%- endunless -%}
+									{%- else -%}
+										<div class="megamenu__image-inner">
+											{{- megamenu_image -}}
+										</div>
+									{%- endunless -%}
+								{%- endif -%}
+							</div>
+
+							<div class="megamenu__image catering">
+								{%- if image_catering_initial != blank -%}
+									{%- capture megamenu_image -%}
+										<div class="megamenu__image-bg lazyload"
+											data-bgset="{% render 'bgset', image: image_catering_initial %}"
+											data-sizes="auto"
+											data-parent-fit="cover"
+											style="padding-top: {{ image_aspect_ratio }}%;">
+										</div>
+										<noscript>
+											<div class="megamenu__image-bg" style="background-image: url({{ image_catering | img_url: '1024x' }}); padding-top: {{ image_aspect_ratio }}%;"></div>
+										</noscript>
+									{%- endcapture -%}
+
+									{%- unless image_link_catering == blank -%}
+										<a href="{{ image_link_catering }}" class="megamenu__image-inner">
+											{{- megamenu_image -}}
+										</a>
+										{%- unless image_link_text_catering == blank -%}
+											<a class="megamenu__link" href="{{ image_link_catering }}">{{ image_link_text_catering }}</a>
+										{%- endunless -%}
+									{%- else -%}
+										<div class="megamenu__image-inner">
+											{{- megamenu_image -}}
+										</div>
+									{%- endunless -%}
+								{%- endif -%}
 							</div>
 						{%- endif -%}
 					{%- endif -%}
@@ -106,7 +165,7 @@
 						{%- for sublink in link.links -%}
 							<li data-levels = "{{ sublink.levels }}" class="submenu-item {% if sublink.levels > 0 %}has-submenu{% endif %}">
 								{%- comment -%} SUBLINK TITLE {%- endcomment -%}
-								<a class="{% if is_meganav %}submenu-item__title {% endif %}visible-nav-link" href="{{ sublink.url }}" aria-expanded="false"{% if has_sub_menu %} aria-haspopup="true"{% endif %} tabindex="-1">
+								<a class="{% if is_meganav %}submenu-item__title {% endif %}visible-nav-link" href="{{ sublink.url }}" {% if sublink.title == 'Blank' %}style="display: none;"{% endif %} aria-expanded="false"{% if has_sub_menu %} aria-haspopup="true"{% endif %} {% if sublink.title == 'Book Now' %}data-type="book-now"{% endif %} tabindex="-1">
 									{{- sublink.title -}}
 								</a>
 
@@ -118,11 +177,11 @@
 
 								{%- if sublink.levels > 0 -%}
 
-								<ul class="submenu">
+								<ul class="submenu grandchild">
 									{%- comment -%} SUB-SUBMENU LINKS {%- endcomment -%}
 									{%- for subsublink in sublink.links -%}
 										<li class="submenu-item">
-											<a {% if forloop.last == true  %} data-last="true" {% endif %} class="visible-nav-link" href="{{ subsublink.url }}" tabindex="-1">{{ subsublink.title }}</a>
+											<a {% if forloop.last == true  %} data-last="true" {% endif %} class="visible-nav-link {% if subsublink.title == 'Shop All' or subsublink.title == 'Book Now' or subsublink.title == 'Explore More Flavors' %}shop-all{% endif %}" href="{{ subsublink.url }}" {% if link.title == 'Catering & Events' %}data-type="{{ subsublink.handle }}{% endif %}" tabindex="-1">{{ subsublink.title }}</a>
 										</li>
 									{%- endfor -%}
 								</ul>
@@ -146,19 +205,71 @@
 	{%- endif -%}
 </ul>
 
+
+<script>
+	$(document).ready(() => {
+		preload(
+			"{{ section.settings.meganav_image_corporate | img_url: '400x' }}",
+			"{{ section.settings.meganav_image_classes | img_url: '400x' }}",
+			"{{ section.settings.meganav_image_branded | img_url: '400x' }}",
+			"{{ section.settings.meganav_image_catering | img_url: '400x' }}",
+			"{{ section.settings.meganav_image_book | img_url: '400x' }}"
+		);
+
+		$('li.submenu-item a.visible-nav-link, li.submenu-item a.submenu-item__title').hover(function() {
+			var type = $(this).data('type');
+
+			if(type === 'corporate-deliveries') {
+				$('div.megamenu__image.catering div.megamenu__image-bg').css('background','url({{ section.settings.meganav_image_corporate | img_url: '400x' }})');
+			} else if(type === 'ice-cream-making-classes') {
+				$('div.megamenu__image.catering div.megamenu__image-bg').css('background','url({{ section.settings.meganav_image_classes | img_url: '400x' }}');
+			} else if(type === 'branded-activations') {
+				$('div.megamenu__image.catering div.megamenu__image-bg').css('background','url({{ section.settings.meganav_image_branded | img_url: '400x' }}');
+			} else if(type === 'catering') {
+				$('div.megamenu__image.catering div.megamenu__image-bg').css('background','url({{ section.settings.meganav_image_catering | img_url: '400x' }}');
+			} else if(type === 'book-now') {
+				$('div.megamenu__image.catering div.megamenu__image-bg').css('background','url({{ section.settings.meganav_image_book | img_url: '400x' }}');
+			}
+		})
+	})
+
+	var images = [];
+  function preload() {
+    for (var i = 0; i < arguments.length; i++) {
+      images[i] = new Image();
+      images[i].src = preload.arguments[i];
+    }
+  }
+</script>
+
 {%- if is_hamburger_nav -%}
 	<div class="nav-user">
 		<ul>
 			{%- if shop.customer_accounts_enabled -%}
 				{%- if customer -%}
-					<li class="nav-user__item nav-user__item--account"><a href="{{ routes.account_url }}" class="nav-user__link" tabindex="-1">{{ 'customer.link.my_account' | t }}</a></li>
+					<li class="nav-user__item nav-user__item--account">
+						<a href="{{ routes.account_url }}" class="nav-user__link" tabindex="-1">
+							{{ 'customer.link.my_account' | t }}
+							{%- render 'icon-user' -%}
+						</a>
+					</li>
 				{%- else -%}
-					<li class="nav-user__item nav-user__item--account"><a href="{{ routes.account_login_url }}" class="nav-user__link" tabindex="-1">{{ 'customer.link.login' | t }}</a></li>
+					<li class="nav-user__item nav-user__item--account">
+						<a href="{{ routes.account_login_url }}" class="nav-user__link" tabindex="-1">
+							{{ 'customer.link.login' | t }}
+							{%- render 'icon-user' -%}
+						</a>
+					</li>
 				{%- endif -%}
 			{%- endif -%}
 
 			{%- if settings.show_search -%}
-				<li class="nav-user__item nav-user__item--search"><a href="{{ routes.search_url }}" class="nav-user__link" tabindex="-1">{{ 'general.slide_out_navigation.search_label' | t }}</a></li>
+				<li class="nav-user__item nav-user__item--search">
+					<a href="{{ routes.search_url }}" class="nav-user__link" tabindex="-1">
+						{{ 'general.slide_out_navigation.search_label' | t }}
+							{%- render 'icon-search' -%}
+					</a>
+				</li>
 			{%- endif -%}
 		</ul>
 	</div>
@@ -167,10 +278,10 @@
 		<div class="nav-footer">
 			<div class="nav-social">
 				<ul class="social-links social-links--nav">
-					{%- if settings.twitter_url != '' -%}
+					{%- if settings.instagram_url != '' -%}
 						<li>
-							<a aria-label="{{ 'general.footer.twitter' | t }}" href="{{ settings.twitter_url }}" target="_blank" tabindex="-1" class="social-link">
-								{%- render 'icon-twitter' -%}
+							<a aria-label="{{ 'general.footer.instagram' | t }}" href="{{ settings.instagram_url }}" target="_blank" tabindex="-1" class="social-link">
+								<img class="social-logo" src="{{ 'instagram-logo.svg' | asset_url }}">
 							</a>
 						</li>
 					{%- endif -%}
@@ -183,10 +294,18 @@
 						</li>
 					{%- endif -%}
 
-					{%- if settings.instagram_url != '' -%}
+					{%- if settings.youtube_url != '' -%}
 						<li>
-							<a aria-label="{{ 'general.footer.instagram' | t }}" href="{{ settings.instagram_url }}" target="_blank" tabindex="-1" class="social-link">
-								{%- render 'icon-instagram' -%}
+							<a aria-label="{{ 'general.footer.youtube' | t }}" href="{{ settings.youtube_url }}" target="_blank" tabindex="-1" class="social-link">
+								{%- render 'icon-youtube' -%}
+							</a>
+						</li>
+					{%- endif -%}
+
+					{%- if settings.twitter_url != '' -%}
+						<li>
+							<a aria-label="{{ 'general.footer.twitter' | t }}" href="{{ settings.twitter_url }}" target="_blank" tabindex="-1" class="social-link">
+								{%- render 'icon-twitter' -%}
 							</a>
 						</li>
 					{%- endif -%}
@@ -195,14 +314,6 @@
 						<li>
 							<a aria-label="{{ 'general.footer.pinterest' | t }}"  href="{{ settings.pinterest_url }}" target="_blank" tabindex="-1" class="social-link">
 								{%- render 'icon-pinterest' -%}
-							</a>
-						</li>
-					{%- endif -%}
-
-					{%- if settings.youtube_url != '' -%}
-						<li>
-							<a aria-label="{{ 'general.footer.youtube' | t }}" href="{{ settings.youtube_url }}" target="_blank" tabindex="-1" class="social-link">
-								{%- render 'icon-youtube' -%}
 							</a>
 						</li>
 					{%- endif -%}

@@ -1,0 +1,179 @@
+<section class="collection-feature">
+  <div class="wrapper">
+    <div class="column">
+      {% assign collection1 = collections[section.settings.collection-1] %}
+      <a href="{{ collection1.url }}">
+        <div id="hover-xs-1" class="hover-wrapper">
+          <video class="video collection-video collection-video-1" playsinline muted loop data-fallback-image="{{ section.settings.collection-1-fallback-image | img_url: '1000x' }}">
+            <source src="{{ section.settings.collection-1-video }}" type="video/mp4">
+          </video>
+          <div class="content-wrapper flex-container">
+            <div>
+              <div class="image-wrapper">
+                <img class="ico ico-1" src="{{ section.settings.collection-1-icon | img_url: '800x' }}">
+                <div class="overlay-wrapper flex-container">
+                  <img src="{{ section.settings.collection-1-overlay | img_url: '800x' }}">
+                </div>
+              </div>
+              <h3 class="title">{% if collection1.handle == 'ice-cream-pints' %}SHOP ALL {% endif %}{{ collection1.title | remove: 'Ice Cream ' }}</h3>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="column">
+      {% assign collection2 = collections[section.settings.collection-2] %}
+      <a href="{{ collection2.url }}">
+        <div id="hover-xs-2" class="hover-wrapper">
+          <video class="video collection-video collection-video-2" playsinline muted loop data-fallback-image="{{ section.settings.collection-2-fallback-image | img_url: '1000x' }}">
+            <source src="{{ section.settings.collection-2-video }}" type="video/mp4">
+          </video>
+          <div class="content-wrapper flex-container">
+            <div>
+              <div class="image-wrapper">
+                <img class="ico ico-2" src="{{ section.settings.collection-2-icon | img_url: '800x' }}">
+                <div class="overlay-wrapper flex-container">
+                  <img src="{{ section.settings.collection-2-overlay | img_url: '800x' }}">
+                </div>
+              </div>
+              <h3 class="title" href="{{ collection2.url }}">{% if collection2.handle == 'sammies' %}SHOP ALL {% endif %}{{ collection2.title | remove: 'Ice Cream ' }}</h3>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(() => {
+      $('.hover-wrapper').mouseover(function() {
+        $(this).children('video.video').trigger('play');
+        $(this).find('img.ico').addClass('rotating');
+      })
+      $('.hover-wrapper').mouseleave(function() {
+        $(this).children('video.video').trigger('pause');
+        $(this).find('img.ico').removeClass('rotating');
+      })
+
+      $('video.collection-video').trigger('play');
+      $('video.collection-video').trigger('pause');
+    })
+
+    function isScrolledIntoView(el) {
+        var rect = el.getBoundingClientRect();
+        var elemTop = rect.top;
+        var elemBottom = rect.bottom;
+
+        // Only completely visible elements return true:
+        var isVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight);
+        // Partially visible elements return true:
+        // isVisible = elemTop < window.innerHeight && elemBottom >= 0;
+        return isVisible;
+    }
+
+    $(window).scroll(() => {
+      var isVisible1 = isScrolledIntoView(document.getElementById('hover-xs-1')),
+          isVisible2 = isScrolledIntoView(document.getElementById('hover-xs-2')),
+          isVisible3 = isScrolledIntoView(document.getElementById('hover-xs-3')),
+          isVisible4 = isScrolledIntoView(document.getElementById('hover-xs-4'));
+
+      if(isVisible1) {
+        enableHoverState(1);
+      } else {
+        disableHoverState(1);
+      }
+
+      if(isVisible2) {
+        enableHoverState(2);
+      } else {
+        disableHoverState(2);
+      }
+
+      if(isVisible3) {
+        enableHoverState(3);
+      } else {
+        disableHoverState(3);
+      }
+
+      if(isVisible4) {
+        enableHoverState(4);
+      } else {
+        disableHoverState(4);
+      }
+
+      function enableHoverState(num) {
+        $(`video.collection-video-${num}`).trigger('play');
+        $(`img.ico-${num}`).addClass('rotating');
+      }
+
+      function disableHoverState(num) {
+        $(`video.collection-video-${num}`).trigger('pause');
+        $(`img.ico-${num}`).removeClass('rotating');
+      }
+    })
+  </script>
+</section>
+
+{% schema %}
+  {
+    "name": "Collection Feature",
+    "settings": [
+      {
+        "type": "collection",
+        "id": "collection-1",
+        "label": "Collection 1"
+      },
+      {
+        "type": "text",
+        "id": "collection-1-video",
+        "label": "Collection 1 Video"
+      },
+      {
+        "type": "image_picker",
+        "id": "collection-1-fallback-image",
+        "label": "Collection 1 Mobile Fallback Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "collection-1-icon",
+        "label": "Collection 1 Icon"
+      },
+      {
+        "type": "image_picker",
+        "id": "collection-1-overlay",
+        "label": "Collection 1 Image Overlay"
+      },
+      {
+        "type": "collection",
+        "id": "collection-2",
+        "label": "Collection 2"
+      },
+      {
+        "type": "text",
+        "id": "collection-2-video",
+        "label": "Collection 2 Video"
+      },
+      {
+        "type": "image_picker",
+        "id": "collection-2-fallback-image",
+        "label": "Collection 2 Mobile Fallback Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "collection-2-icon",
+        "label": "Collection 2 Icon"
+      },
+      {
+        "type": "image_picker",
+        "id": "collection-2-overlay",
+        "label": "Collection 2 Image Overlay"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection Feature",
+        "category": "Custom"
+      }
+    ]
+  }
+{% endschema %}

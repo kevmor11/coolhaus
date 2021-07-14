@@ -1,0 +1,172 @@
+<section class="on-the-move">
+  <div id="lines-image" class="lines desktop hide-mobile"></div>
+  <div id="lines-image-xs" class="lines mobile hide-desktop"></div>
+  <img class="move-truck" src="{{ 'move-truck.png' | asset_img_url: '1000x' }}">
+  <img id="wheel-1" class="wheel" src="{{ 'wheel.png' | asset_img_url: '200x' }}">
+  <img id="wheel-2" class="wheel" src="{{ 'wheel.png' | asset_img_url: '200x' }}">
+  <h3 class="title">{{ section.settings.title }}</h3>
+  <div class="desc">{{ section.settings.desc }}</div>
+  <div class="hover-button-wrapper on-the-move">
+    <span class="hover-cta">
+      <a class="button cta" href="{{ section.settings.button-url }}">{{ section.settings.button-text }}</a>
+      <div class="border-wrapper flex-container">
+        <img class="cta" src="{{ 'cta-hover.png' | asset_img_url: '200x' }}">
+      </div>
+    </span>
+  </div>
+
+  <div class="drip-wrapper">
+    <img id="drips" class="drips w-100 hide-mobile" src="{{ 'drips.png' | asset_img_url: '2000x' }}">
+    <img id="drips-xs" class="drips w-100 hide-desktop" src="{{ 'drip-mobile.png' | asset_img_url: '1000x' }}">
+  </div>
+  {% comment %} <div class="drips w-100"></div> {% endcomment %}
+
+  <script>
+    $(document).ready(() => {
+      $(window).scroll(() => {
+        cycleClouds();
+        rotateWheels();
+        dripDrips();
+      })
+    })
+
+    function cycleClouds() {
+      let id = 'lines-image';
+      if($(window).width() < 768) id = 'lines-image-xs';
+
+      let image = document.getElementById(id);
+      image.style.backgroundPosition = window.pageYOffset/3 + 'px 0';
+    }
+
+    function dripDrips() {
+      var windowScroll = $(this).scrollTop(),
+          sectionTop = $('section.on-the-move').offset().top;
+
+      if(windowScroll > sectionTop + 150) {
+        $('#drips, #drips-xs').addClass('grow');
+      } else {
+        $('#drips, #drips-xs').removeClass('grow');
+      }
+    }
+
+    function rotateWheels() {
+      let wheel1 = document.getElementById('wheel-1'),
+          wheel2 = document.getElementById('wheel-2');
+
+      wheel1.style.transform = 'rotate(-' + window.pageYOffset/4 + 'deg)';
+      wheel2.style.transform = 'rotate(-' + window.pageYOffset/4 + 'deg)';
+    }
+  </script>
+</section>
+
+<section class="get-yours-delivered">
+  <div class="wrapper upper">
+    <div class="column image">
+      <img class="left" src="{{ 'deliver-1.png' | asset_img_url: '400x' }}">
+    </div>
+    <div class="column title">
+      <h3 class="title text-center">{{ section.settings.title-2 }}</h3>
+      <div class="desc">{{ section.settings.desc-2 }}</div>
+    </div>
+    <div class="column image hide-mobile">
+      <img class="right" src="{{ 'deliver-2.png' | asset_img_url: '400x' }}">
+    </div>
+  </div>
+  <div class="wrapper">
+    {% for block in section.blocks %}
+      {% if forloop.index < 7 %}
+        <div class="column">
+          <a href="{{ block.settings.article-url }}" target="_blank">
+            <img class="logo-ico" src="{{ block.settings.logo | img_url: '200x' }}">
+          </a>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <div class="wrapper lower">
+    {% for block in section.blocks %}
+      {% if forloop.index > 6 %}
+        <div class="column lower">
+          <a href="{{ block.settings.article-url }}" target="_blank">
+            <img class="logo-ico lower" src="{{ block.settings.logo | img_url: '200x' }}">
+          </a>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "On the Move",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Upper Section"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "ON THE MOVE AND ON DEMAND"
+      },
+      {
+        "type": "textarea",
+        "id": "desc",
+        "label": "Desc",
+        "default": "Get your ice cream direct from one of our select distributors, delivered, or at a food truck nearest you"
+      },
+      {
+        "type": "url",
+        "id": "button-url",
+        "label": "Button URL"
+      },
+      {
+        "type": "text",
+        "id": "button-text",
+        "label": "Button Text",
+        "default": "FIND AN ICECREAM  TRUCK"
+      },
+      {
+        "type": "header",
+        "content": "Upper Section"
+      },
+      {
+        "type": "text",
+        "id": "title-2",
+        "label": "Title",
+        "default": "GET YOURS DELIVERED"
+      },
+      {
+        "type": "textarea",
+        "id": "desc-2",
+        "label": "Desc",
+        "default": "Ice cream does sound good right now! Order Coolhaus from our amazing delivery service partners to your door."
+      }
+    ],
+    "blocks": [
+      {
+        "type": "logo",
+        "name": "Logo",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "logo",
+            "label": "Logo"
+          },
+          {
+            "type": "url",
+            "id": "article-url",
+            "label": "Article URL"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "On the Move",
+        "category": "Custom"
+      }
+    ]
+  }
+{% endschema %}

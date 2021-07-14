@@ -127,6 +127,7 @@
 			</div>
 
 			<div class="checkout-buttons">
+				<div class="order-min-cart">$60.00 Order Minimum for Ice Cream</div>
 				<div class="cart-totals-table">
 					{% comment %} Cart level discounts {% endcomment %}
 					<p class="cart-total-price">
@@ -171,11 +172,11 @@
 								<span class="cart__checkout cart__checkout--no-js button">{{ 'cart.labels.checkout' | t }}</span>
 							</noscript>
 
-							{%- if additional_checkout_buttons -%}
+							{% comment %} {%- if additional_checkout_buttons -%}
 								<div class="additional-checkout-buttons">
 									{{ content_for_additional_checkout_buttons }}
 								</div>
-							{%- endif -%}
+							{%- endif -%} {% endcomment %}
 						</fieldset>
 					</div>
 

@@ -71,6 +71,7 @@
 	</div>
 
 	<div class="checkout-buttons">
+		<div class="order-min-cart">$60.00 Order Minimum for Ice Cream</div>
 		<div class="cart-totals-table">
 			<p class="cart-total-price">
 				<span>{{ 'cart.labels.subtotal' | t }}:</span>
@@ -100,11 +101,11 @@
 				<fieldset class="cart__button-fieldset" data-cart-buttons-fieldset>
 					<button class="button cart__checkout" type="submit" name="checkout">{{ 'cart.labels.checkout' | t }}</button>
 
-					{%- if additional_checkout_buttons -%}
+					{% comment %} {%- if additional_checkout_buttons -%}
 						<div class="additional-checkout-buttons">
 							{{ content_for_additional_checkout_buttons }}
 						</div>
-					{%- endif -%}
+					{%- endif -%} {% endcomment %}
 				</fieldset>
 			</div>
 

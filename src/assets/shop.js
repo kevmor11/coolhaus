@@ -1684,6 +1684,17 @@ jQuery( function ($) {
 				// Open/close megamenu
 				$('.nav-standard .menu-item--meganav')
 					.on('mouseover', function() {
+						var title = $(this).children('a').text();
+						console.log("TITLE", title);
+						$('.megamenu__image').hide();
+						if(title == 'Shop') {
+							$('.megamenu__image.shop').show();
+						} else if(title == 'Find Us') {
+							$('.megamenu__image.find-us').show();
+						} else if(title == 'Catering & Events') {
+							$('.megamenu__image.catering').show();
+
+						}
 						$('.site-header').addClass('header--megamenu-visible');
 						$(this).find('.visible-nav-link').removeAttr('tabindex');
 					})
@@ -2197,6 +2208,41 @@ Cart = {
 				Cart.submit($(this));
 			}
 		});
+
+		$('span.quantity-change').click(function() {
+			var quantityEl = $(this).siblings('input.quantity'),
+					quantity = Number(quantityEl.val());
+
+			if($(this).hasClass('minus')) {
+				if(quantity > 1) {
+					quantityEl.val(quantity - 1);
+				}
+			} else if ($(this).hasClass('plus')) {
+				quantityEl.val(quantity + 1);
+			}
+		})
+
+		$('.hover-cta').mouseenter(function() {
+			$(this).find('img.cta').addClass('hovered');
+		})
+
+		$('.hover-cta').mouseleave(function() {
+			$(this).find('img.cta').removeClass('hovered');
+		})
+
+		$('.product-hover-js').mouseenter(function() {
+			if($(window).width() > 767) {
+				$(this).find('video.bg-video, form.productForm').show();
+				$(this).find('img.spinner').addClass('rotating');
+			}
+    })
+
+    $('.product-hover-js').mouseleave(function() {
+			if($(window).width() > 767) {
+				$(this).find('video.bg-video, form.productForm').hide();
+				$(this).find('img.spinner').removeClass('rotating');
+			}
+    })
 
 		$(window).on( 'keyup', function(e) {
 			if ( e.key === "Escape" ) {

@@ -75,7 +75,7 @@
 					<p>{{ collection.description | strip_html | truncate: 100, '...' }}</p>
 				{%- endif -%}
 				{%- if button_text != blank -%}
-					<span class="button button--{{ button_style }}">{{ button_text }}</span>
+					<span class="button button--{{ button_style }}">{{ button_text }} {{ collection.title | remove: "Artisanal" | remove: "Multiserve" | remove: "Dairy Free" }}</span>
 				{%- endif -%}
 			</div>
 		</a>

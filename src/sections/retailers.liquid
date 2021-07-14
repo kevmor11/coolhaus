@@ -1,0 +1,47 @@
+<section class="page-hero">
+  <img class="w-100 hide-mobile" src="{{ section.settings.hero-img | img_url: '2000x' }}">
+  <img class="w-100 hide-desktop" src="{{ section.settings.hero-img-xs | img_url: '800x' }}">
+
+  <div class="blocker"></div>
+
+  <div class="text-container flex-container">
+    <div>
+      <h1 class="title">{{ section.settings.title }}</h1>
+      <div class="desc">{{ section.settings.desc }}</div>
+    </div>
+  </div>
+</section>
+
+<section class="retailers">
+  <div class="text-center">
+    <iframe src="https://shelfsmartdata.com/app/slt/shelfsmartlocator/shelfsmartlocator.php?brand=CoolHaus&amp;radiuslength=50&amp;iconcolor=27bfe1&amp;searchtimeinmonths=3&amp;resultslimit=25" style="width: 100%; min-height: 600px; border: none;" scrolling="no" allow="geolocation"></iframe>
+  </div>
+</section>
+
+{% schema %}
+	{
+		"name": "Retailers",
+		"settings": [
+			{
+				"type": "text",
+				"id": "title",
+				"label": "Title"
+			},
+			{
+				"type": "richtext",
+				"id": "desc",
+				"label": "Body Content"
+			},
+      {
+				"type": "image_picker",
+				"id": "hero-img",
+				"label": "Hero Image - Desktop"
+			},
+      {
+				"type": "image_picker",
+				"id": "hero-img-xs",
+				"label": "Hero Image - Mobile"
+			}
+		]
+	}
+{% endschema %}

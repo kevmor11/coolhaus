@@ -1,0 +1,16 @@
+<form class="productForm hover-button-wrapper {% if hover %}hover-cta{% endif %}">
+  <div class="cta-button-wrapper">
+    <div class="quantity-picker">
+      <span class="quantity-change minus">-</span>
+      <input class="quantity" name="quantity" type="number" min="1" value="1">
+      <span class="quantity-change plus">+</span>
+    </div>
+    <input type="hidden" class="variant" name="id" value="{{ product.variants.first.id }}">
+    <button data-add-to-cart data-add-to-cart-text data-handle="{{ product.handle }}">ADD TO CART</button>
+  </div>
+  {% if hover %}
+    <div class="border-wrapper flex-container">
+      <img class="cta" src="{{ 'cta-hover.png' | asset_img_url: '300x' }}">
+    </div>
+  {% endif %}
+</form>

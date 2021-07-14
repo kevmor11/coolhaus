@@ -1,0 +1,91 @@
+<section class="mission">
+  <div class="outer-container">
+    <div class="wrapper images">
+      <div class="column small">
+        <img class="icon-img" src="{{ section.settings.image-1 | img_url: '200x' }}">
+      </div>
+      <div class="column">
+        <div class="overlay-wrapper">
+          <img class="overlay-img" src="{{ section.settings.image-2 | img_url: '400x' }}">
+          <img id="rotater" class="bg-img" src="{{ section.settings.image-2-bg | img_url: '400x' }}">
+        </div>
+      </div>
+      <div class="column small">
+        <img class="icon-img" src="{{ section.settings.image-3 | img_url: '200x' }}">
+      </div>
+    </div>
+    <div class="desc">{{ section.settings.desc }}</div>
+    <div class="hover-button-wrapper">
+      <span class="hover-cta">
+        <a class="button cta" href="{{ section.settings.button-url }}">{{ section.settings.button-text }}</a>
+        <div class="border-wrapper flex-container">
+          <img class="cta" src="{{ 'cta-hover.png' | asset_img_url: '200x' }}">
+        </div>
+      </span>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(() => {
+      window.onscroll = function() {
+        scrollRotate();
+      };
+
+      function scrollRotate() {
+        let image = document.getElementById('rotater');
+        image.style.transform = 'rotate(' + window.pageYOffset/4 + 'deg)';
+      }
+    })
+  </script>
+</section>
+
+{% schema %}
+  {
+    "name": "Mission",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image-1",
+        "label": "Icon Left"
+      },
+      {
+        "type": "image_picker",
+        "id": "image-2",
+        "label": "Image Middle"
+      },
+      {
+        "type": "image_picker",
+        "id": "image-2-bg",
+        "label": "Image Middle Background"
+      },
+      {
+        "type": "image_picker",
+        "id": "image-3",
+        "label": "Icon Right"
+      },
+      {
+        "type": "textarea",
+        "id": "desc",
+        "label": "Text",
+        "default": "OUR MISSION IS TO EMPOWER THE NEXT GENERATION OF DIVERSE ENTREPRENEURS AND CREATORS TO LIVE OUT THEIR DREAMS BY USING OUR UNIQUE AND INNOVATIVE ICE CREAM NOVELTIES AS A PLATFORM FOR CHANGE."
+      },
+      {
+        "type": "text",
+        "id": "button-text",
+        "label": "Button Text",
+        "default": "LEARN MORE"
+      },
+      {
+        "type": "url",
+        "id": "button-url",
+        "label": "Button URL"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Mission",
+        "category": "Custom"
+      }
+    ]
+  }
+{% endschema %}

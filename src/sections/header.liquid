@@ -36,6 +36,10 @@
 		{%- style -%}
 			.logo__image--other { width: {{ logo_width }}px; height: {{ logo_height }}px; }
 			.header--has-scrolled .logo__image--other { width: {{ logo_small_width }}px; height: {{ logo_small_height }}px; }
+
+			@media (max-width: 767px) {
+				.logo__image--other { width: 160px; height: auto; }
+			}
 		{%- endstyle -%}
 
 		<img
@@ -134,7 +138,7 @@
 			<div class="header-fix-cont">
 				<div class="header-fix-cont-inner">
 					<nav role="navigation" class="nav-standard nav-main">
-						{%- render 'navigation', is_hamburger_nav: false -%}
+						{%- render 'navigation', is_hamburger_nav: false, section: section -%}
 
 						{%- if settings.show_search -%}
 							{%- render 'nav-search' -%}
@@ -330,8 +334,8 @@
 		},
 		{
 			"type": "image_picker",
-			"id": "meganav_image",
-			"label": "Image",
+			"id": "meganav_image_shop",
+			"label": "Shop Image",
 			"info": "Recommended size: 500 x 800 px"
 		},
 		{
@@ -345,14 +349,71 @@
 			"default": 1
 		},
 		{
+			"type": "url",
+			"id": "meganav_image_link_shop",
+			"label": "Shop Link"
+		},
+		{
 			"type": "text",
-			"id": "meganav_image_heading",
-			"label": "Heading"
+			"id": "meganav_image_link_text_shop",
+			"label": "Shop Link Text"
+		},
+		{
+			"type": "image_picker",
+			"id": "meganav_image_fu",
+			"label": "Find Us Image",
+			"info": "Recommended size: 500 x 800 px"
 		},
 		{
 			"type": "url",
-			"id": "meganav_image_link",
-			"label": "Link"
+			"id": "meganav_image_link_fu",
+			"label": "Find Us Link"
+		},
+		{
+			"type": "text",
+			"id": "meganav_image_link_text_fu",
+			"label": "Find Us Link Text"
+		},
+		{
+			"type": "image_picker",
+			"id": "meganav_image_catering_initial",
+			"label": "Initial Image",
+			"info": "Recommended size: 500 x 800 px"
+		},
+		{
+			"type": "url",
+			"id": "meganav_image_link_catering",
+			"label": "Promo Link"
+		},
+		{
+			"type": "text",
+			"id": "meganav_image_link_text_catering",
+			"label": "Promo Link Text"
+		},
+		{
+			"type": "image_picker",
+			"id": "meganav_image_corporate",
+			"label": "Corporate Deliveries Image"
+		},
+		{
+			"type": "image_picker",
+			"id": "meganav_image_classes",
+			"label": "Ice Cream Making Classes Image"
+		},
+		{
+			"type": "image_picker",
+			"id": "meganav_image_branded",
+			"label": "Branded Activations Image"
+		},
+		{
+			"type": "image_picker",
+			"id": "meganav_image_catering",
+			"label": "Catering Image"
+		},
+		{
+			"type": "image_picker",
+			"id": "meganav_image_book",
+			"label": "Book Now Image"
 		}
 	]
 }

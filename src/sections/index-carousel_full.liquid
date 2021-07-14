@@ -1,0 +1,126 @@
+<section class="carousel-full flickity-section">
+  <div class="product-carousel full-carousel">
+    {% for block in section.blocks %}
+      {% assign product1 = all_products[block.settings.product] %}
+      <div class="carousel-cell cell-full" data-icon="{{ block.settings.icon | img_url: '400x' }}">
+        <video class="bg-video" autoplay playsinline muted loop>
+          {% if product1.metafields.custom_fields["flavour_video"] %}
+            {% assign video = product1.metafields.custom_fields["flavour_video"] %}
+          {% else %}
+            {% assign video = 'https://player.vimeo.com/external/553441087.hd.mp4?s=fcbffe60ee362fc2fece4d0e325f38be7565777f&profile_id=175' %}
+          {% endif %}
+          <source src="{{ video }}" type="video/mp4">
+        </video>
+        <div class="video-container">
+          <video class="video hide-mobile" autoplay playsinline muted loop>
+            <source src="{{ block.settings.video }}" type="video/mp4">
+          </video>
+          <video class="video hide-desktop" autoplay playsinline muted loop data-fallback-image="{{ block.settings.fallback-image-f | img_url: '1000x' }}">
+            <source src="{{ block.settings.video-xs }}" type="video/mp4">
+          </video>
+        </div>
+        <div class="product-content">
+          <div class="title">{{ product1.title }}</div>
+          <div class="hover-button-wrapper left-align hover-cta">
+            {% if block.settings.product-url  %}
+              {% assign url = block.settings.product-url %}
+            {% else  %}
+              {% assign url = product1.url %}
+            {% endif  %}
+            <a class="button cta" href="{{ url }}">{{ section.settings.button-text }}</a>
+            <div class="border-wrapper flex-container">
+              <img class="cta" src="{{ 'cta-hover.png' | asset_img_url: '200x' }}">
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="button--next">
+    <img id="next-icon" src="{{ section.blocks[1].settings.icon | img_url: '400x' }}">
+    <div>NEXT</div>
+  </div>
+</section>
+
+<script>
+  $(document).ready(() => {
+    var $carousel = $('.full-carousel').flickity({
+      cellAlign: 'left',
+      contain: true,
+      pageDots: false,
+      imagesLoaded: true,
+      wrapAround: true,
+      prevNextButtons: true
+    });
+
+    $('.button--next').click(() => {
+      $carousel.flickity('next');
+
+      var icon = $('div.cell-full.is-selected').next('.cell-full').data('icon');
+      if(icon) {
+        $('#next-icon').attr('src', icon);
+      } else {
+        $('#next-icon').attr('src', "{{ section.blocks[0].settings.icon | img_url: '400x' }}");
+      }
+    });
+  })
+</script>
+
+{% schema %}
+  {
+    "name": "Carousel Full",
+    "settings": [
+      {
+        "type": "text",
+        "id": "button-text",
+        "label": "Button Text",
+        "default": "BUY NOW AT WHOLE FOODS"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "product",
+        "name": "Product",
+        "settings": [
+          {
+            "type": "product",
+            "id": "product",
+            "label": "Product"
+          },
+          {
+            "type": "url",
+            "id": "product-url",
+            "label": "URL"
+          },
+          {
+            "type": "text",
+            "id": "video",
+            "label": "Video - Desktop"
+          },
+          {
+            "type": "text",
+            "id": "video-xs",
+            "label": "Video - Mobile"
+          },
+          {
+            "type": "image_picker",
+            "id": "fallback-image-f",
+            "label": "Foreground Fallback Image",
+            "info": "Image shown when video fails to play on mobile low battery mode"
+          },
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Icon"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Carousel Full",
+        "category": "Custom"
+      }
+    ]
+  }
+{% endschema %}

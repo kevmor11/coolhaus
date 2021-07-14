@@ -1,0 +1,71 @@
+<section class="hero-video">
+  <video id="hero-video" class="video" autoplay playsinline muted loop controls="false" data-fallback-image="{{ section.settings.video-fallback | img_url: '1000x' }}">
+    <source src="{{ section.settings.video-url }}" type="video/mp4">
+  </video>
+  <div class="logo-container flex-container">
+    <img class="overlay-logo" src="{{ section.settings.hero-img | img_url: '600x' }}">
+  </div>
+  <a class="cta" href="#build-order">
+    BUILD YOUR ORDER NOW
+    <img src="{{ 'down-arrow.svg' | asset_url }}">
+  </a>
+  {% if section.settings.left-img %}
+    <img class="floating-image left-image" src="{{ section.settings.left-img | img_url: '700x' }}">
+  {% endif %}
+  {% if section.settings.right-img %}
+    <img id="spinner" class="floating-image right-image" src="{{ section.settings.right-img | img_url: '700x' }}">
+  {% endif %}
+
+  <script>
+    $(document).ready(() => {
+      $(window).scroll(() => {
+        let image = document.getElementById('spinner');
+        image.style.transform = 'rotate(' + window.pageYOffset/4 + 'deg)';
+      })
+    })
+  </script>
+</section>
+
+{% include 'smooth-scroll' %}
+
+{% schema %}
+  {
+    "name": "Hero Video",
+    "settings": [
+      {
+        "type": "text",
+        "id": "video-url",
+        "label": "Video URL",
+        "default": "https://player.vimeo.com/external/543762637.hd.mp4?s=5fcf6c1532245c48a7de5fb2d180dcb29a99e97b&profile_id=174&download=1"
+      },
+      {
+        "type": "image_picker",
+        "id": "video-fallback",
+        "label": "Fallback Image",
+        "info": "Image shown when video fails to play on mobile low battery mode"
+      },
+      {
+        "type": "image_picker",
+        "id": "hero-img",
+        "label": "Logo Image Overlay"
+      },
+      {
+        "type": "image_picker",
+        "id": "left-img",
+        "label": "Left Image Overlay"
+      },
+      {
+        "type": "image_picker",
+        "id": "right-img",
+        "label": "Right Image Overlay",
+        "info": "Must be square image with transparent background"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Hero Video",
+        "category": "Custom"
+      }
+    ]
+  }
+{% endschema %}

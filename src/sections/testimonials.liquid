@@ -43,7 +43,10 @@
 										{%- render 'accent-line' -%}
 
 										{%- unless author == blank -%}
-											<p class="testimonial__author">{{ author }}</p>
+											<p class="testimonial__author">
+												<img src="{{ 'author-squiggle.png' | asset_img_url: '400x' }}">
+												{{ author }}
+											</p>
 										{%- endunless -%}
 									</div>
 								{%- endif -%}

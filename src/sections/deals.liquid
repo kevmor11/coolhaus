@@ -1,0 +1,33 @@
+<section class="image-with-text">
+  <div class="wrapper">
+    <div class="column">
+			<h2 class="title">{{ section.settings.title-1 }}</h2>
+			<div class="desc">{{ section.settings.desc-1 }}</div>
+    </div>
+    <div class="column" style="vertical-align: top;">
+      <script id="propodEmbed595f1a487cbac86e9717511508ec0520355768c3" type="text/javascript">(function(c,o,u,p,n,s,x,y){if(!c.propod){c.propod={};}c.propod.staticUrl=p;(c.propod.embedIframes=c.propod.embedIframes||[]).push({frameId:u,frameUrl:n,scriptId:s,loaded:false});c.propod.embedJs=o.createElement("script");c.propod.embedJs.src=p+x;o.getElementById(s).insertAdjacentElement("afterend",c.propod.embedJs);})(window,document,"595f1a487cbac86e9717511508ec0520355768c3","https://couponweb-prod-media.s3.amazonaws.com/","https://banner2.promotionpod.com/banner/595f1a487cbac86e9717511508ec0520355768c3/","propodEmbed595f1a487cbac86e9717511508ec0520355768c3","scripts/frames/embed.js");</script>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+	{
+		"name": "Ice Cream Making Classes",
+		"settings": [
+      {
+        "type": "header",
+        "content": "Image and Text Block"
+      },
+      {
+				"type": "text",
+				"id": "title-1",
+				"label": "Title"
+			},
+			{
+				"type": "richtext",
+				"id": "desc-1",
+				"label": "Body Content"
+			}
+		]
+	}
+{% endschema %}
